@@ -1,0 +1,26 @@
+.profilePage {
+  font-size: large;
+
+  .bottomDiv {
+    margin-top: 1rem;
+    display: flex;
+    justify-content: space-between;
+
+    div {
+      width: 45%;
+
+      form > * {
+        margin-top: .8rem;
+
+      }
+
+    }
+
+  }
+}
+
+.frameStyles {
+  span {
+    font-weight: 500;
+  }
+}

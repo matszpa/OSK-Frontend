@@ -1,0 +1,73 @@
+@import "src/Variable/Variable";
+
+.question {
+  border: $blueDark solid 1px;
+  border-radius: .5rem;
+  overflow: hidden;
+  background-color: $blueDark;
+  box-shadow: 8px 8px 24px 0px rgba(66, 68, 90, 1);
+  margin-bottom: 4rem;
+
+  margin-right: auto;
+  margin-left: auto;
+
+  .video {
+    padding: 0;
+    margin: 1rem auto;
+
+  }
+
+  .media {
+    max-width: 100%;
+    background-color: $blueDark;
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    margin: 1rem auto;
+
+    img {
+      max-height: 40vh;
+    }
+  }
+
+  h5 {
+    color: white;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: $blueDark solid 1px;
+  }
+
+  .answers, p {
+    background-color: white;
+    margin: 0;
+    padding: 1rem;
+    transition: all linear .2s;
+  }
+
+  .check {
+    background-color: white;
+
+    div {
+      padding: 1rem;
+
+    }
+
+    div:not(:first-of-type) {
+      border-top: $grayColor 10px solid;
+    }
+
+  }
+
+  .answers:hover {
+    background-color: #bebebe;
+  }
+
+  .correct {
+    background-color: #64ff64;
+  }
+
+  .wrong {
+    background-color: #ff4d4d;
+  }
+
+}

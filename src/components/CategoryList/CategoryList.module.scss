@@ -1,0 +1,19 @@
+.wrapper {
+  width: 80%;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 40px;
+  grid-auto-rows: minmax(100px, auto);
+  @media only screen and (max-width: 900px) {
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 40px;
+    grid-auto-rows: minmax(100px, auto);
+
+  }
+
+  a {
+    text-decoration: none;
+    color: black;
+  }
+}

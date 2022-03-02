@@ -1,0 +1,9 @@
+@import "../../Variable/Variable";
+
+.frame {
+  border: 1px $grayColor solid;
+  border-radius: 25px;
+  padding: 1rem;
+  mso-border-shadow: yes;
+  box-shadow: 5px 5px 10px $blueDark;
+}
