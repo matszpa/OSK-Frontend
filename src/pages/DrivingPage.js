@@ -96,7 +96,7 @@ export const DrivingPage = () => {
                                       name="status"
                                       onChange={onchangeStatus}>
                             <option value="Nowa">Nowa</option>
-                            <option value="Odbyta">Odbyta</option>
+                            <option value="Zrealizowana">Zrealizowana</option>
                             <option value="Anulowana">Anulowana</option>
                         </Form.Control>
                         <Form.Label>Komentarz</Form.Label>

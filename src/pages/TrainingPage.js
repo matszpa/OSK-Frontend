@@ -3,12 +3,12 @@ import {Button, Form, Table, Modal} from "react-bootstrap";
 import {format} from 'date-fns';
 import AuthContext from "../Context/AuthProvider";
 import {PDFDownloadLink} from "@react-pdf/renderer";
+import TrainingReport from "../components/PDFComponents/TrainingReport";
 
 export const TrainingPage = () => {
     const {user} = useContext(AuthContext)
     const [trainingList, setTrainingList] = useState([]);
     const [categories, setCategories] = useState([]);
-    const [selectedCatId, setSelectedCatId] = useState(null)
     const [userList, setUserList] = useState([])
     const [isFormOpen, setIsFormOpen] = useState(false);
     const [newTraining, setNewTraining] = useState({
@@ -20,6 +20,7 @@ export const TrainingPage = () => {
     })
     const [newPay, setNewPay] = useState({show: false, id: null, value: 0});
     const [endTrainingObject, setEndTrainingObject] = useState(null)
+    const [reportData, setReportData] = useState(null)
     useEffect(() => {
         fetch("http://localhost:8000/categories")
             .then(res => res.json())
@@ -109,6 +110,11 @@ export const TrainingPage = () => {
                 setTrainingList(tmp)
             })
         setEndTrainingObject(null);
+    }
+    const getDataForReport = (id) => {
+        fetch(`http://localhost:8000/getDataForReport/${id}`)
+            .then((res) => res.json())
+            .then((res) => setReportData(res))
     }
     return (
         <div>
@@ -227,7 +233,7 @@ export const TrainingPage = () => {
                         <td>{t.totalCost}</td>
                         {user.role === "ADMIN" &&
                             <td>
-
+                                <Button onClick={() => getDataForReport(t.id)}>Generuj Raport</Button>
                             </td>
                         }
 
@@ -254,6 +260,21 @@ export const TrainingPage = () => {
                 <p>{endTrainingObject?.user.firstName} {endTrainingObject?.user.lastName}</p>
                 Wyjeżdzone godziny w szkoleniu:{endTrainingObject?.drivingHours}
             </ModalCustom>
+            <ModalCustom show={reportData !== null} text="Pobierz raport zakończonego szkolenia"
+                         buttons={[{
+                             text: "Zamknij", action: () => {
+                                 setReportData(null)
+                             }
+                         }]}>
+                <div style={{marginLeft: "150px"}}>
+                    <PDFDownloadLink document={<TrainingReport data={reportData}/>}
+                                     fileName={`${reportData?.user?.firstName}${reportData?.user?.lastName}.pdf`}>
+                        {({loading}) =>
+                            loading ? <p>Trwa generowanie raportu</p> :
+                                <Button> Zapisz raport</Button>
+                        }
+                    </PDFDownloadLink></div>
+            </ModalCustom>
         </div>
     )
 }
@@ -263,7 +284,7 @@ const ModalCustom = (props) => {
         <Modal show={props.show}>
             <Modal.Header><h4>{props.text}</h4></Modal.Header>
             <Modal.Body>{props.children}</Modal.Body>
-            <Modal.Footer>{props.buttons.map((b) => <Button onClick={b.action}>{b.text}</Button>)}</Modal.Footer>
+            <Modal.Footer>{props.buttons?.map((b) => <Button onClick={b.action}>{b.text}</Button>)}</Modal.Footer>
         </Modal>
     )
 }
