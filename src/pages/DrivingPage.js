@@ -4,6 +4,7 @@ import {DrivingForm} from "../components/DrivingPageComponents/DrivingForm";
 import {DrivingTable} from "../components/DrivingPageComponents/DrivingTable";
 import AuthContext from "../Context/AuthProvider";
 import {format} from "date-fns";
+import {Frame} from "../components/HelperComponents/Frame";
 
 export const DrivingPage = () => {
     const [isFormOpen, setIsFormOpen] = useState(false)
@@ -81,10 +82,15 @@ export const DrivingPage = () => {
             {isFormOpen ?
                 <DrivingForm close={() => window.location.reload(false)} cancel={() => setIsFormOpen(false)}/> : <>
                     <h2>Nadchodzące jazdy</h2>
-                    <DrivingTable list={upcoingDriving} text="Anuluj" buttonClick={handleCancelDriving}/>
-                    <hr/>
+                    <Frame>
+                        <DrivingTable list={upcoingDriving} text="Anuluj" buttonClick={handleCancelDriving}/>
+                    </Frame>
+
+                    <hr style={{marginTop: "40px"}}/>
                     <h2>Odbyte jazdy</h2>
-                    <DrivingTable list={pastDriving} text="Zmień status" buttonClick={editDriving}/>
+                    <Frame>
+                        <DrivingTable list={pastDriving} text="Zmień status" buttonClick={editDriving}/>
+                    </Frame>
                 </>
             }
             <Modal show={selectedDriving}>

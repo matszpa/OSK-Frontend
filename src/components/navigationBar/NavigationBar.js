@@ -23,10 +23,19 @@ const NavigationBar = () => {
                               src="https://cdn3.iconfinder.com/data/icons/font-awesome-solid/512/car-512.png"/></Link>
             <ul className={styles.nav_link}>
                 {user.role === 'STUDENT' && <>
-                    <LiLink link="/singleQuestion" text="Jedno pytanie"/>
-                    <LiLink link="/exam" text="Test próbny"/>
+                    {/*<LiLink link="/singleQuestion" text="Jedno pytanie"/>*/}
+                    {/*<LiLink link="/exam" text="Test próbny"/>*/}
+                    <li className={styles.dropdownActivate}>
+                        Teoria
+                        <div className={styles.dropdown}>
+                            <div><Link to="/exam">Próbny egzamin</Link></div>
+                            <div><Link to="/singleQuestion">Losowe pytanie</Link></div>
+                        </div>
+                    </li>
                     <LiLink link="/training" text={"Szkolenia"}/>
                 </>}
+
+
                 {user.role === 'ADMIN' &&
                     <>
                         {/*<LiLink link="/admin" text="Admin"/>*/}
