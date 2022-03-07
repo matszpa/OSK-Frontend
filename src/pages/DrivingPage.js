@@ -41,7 +41,6 @@ export const DrivingPage = () => {
         setSelectedDriving({...selectedDriving, [e.target.name]: e.target.value})
     }
     const confirmStatusChange = () => {
-        var tmp = selectedDriving;
         fetch(`http://localhost:8000/changeStatus/${selectedDriving.id}`, {
             method: "PUT",
             body: JSON.stringify(selectedDriving),
@@ -87,7 +86,7 @@ export const DrivingPage = () => {
                     </Frame>
 
                     <hr style={{marginTop: "40px"}}/>
-                    <h2>Odbyte jazdy</h2>
+                    <h2>Zrealizowane jazdy</h2>
                     <Frame>
                         <DrivingTable list={pastDriving} text="Zmień status" buttonClick={editDriving}/>
                     </Frame>

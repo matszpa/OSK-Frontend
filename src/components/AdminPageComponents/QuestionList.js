@@ -1,7 +1,5 @@
 import {useEffect, useState} from "react";
 import styles from './QuestionList.module.scss'
-import ClearIcon from '@mui/icons-material/Clear';
-import CheckIcon from '@mui/icons-material/Check';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
 import {Question} from "../Question/Question";

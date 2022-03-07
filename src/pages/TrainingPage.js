@@ -4,6 +4,7 @@ import {format} from 'date-fns';
 import AuthContext from "../Context/AuthProvider";
 import {PDFDownloadLink} from "@react-pdf/renderer";
 import TrainingReport from "../components/PDFComponents/TrainingReport";
+import {Frame} from "../components/HelperComponents/Frame";
 
 export const TrainingPage = () => {
     const {user} = useContext(AuthContext)
@@ -118,7 +119,8 @@ export const TrainingPage = () => {
     }
     return (
         <div>
-            {(!isFormOpen && user.role === "ADMIN") && <Button onClick={openModal}>Utwórz szkolenie</Button>}
+            {(!isFormOpen && user.role === "ADMIN") &&
+                <Button onClick={openModal} className={"mb-4"}>Utwórz szkolenie</Button>}
             <Modal show={isFormOpen}>
                 <Modal.Header>Utwórz szkolenie</Modal.Header>
                 <Modal.Body>
@@ -162,7 +164,7 @@ export const TrainingPage = () => {
                     onClick={() => setIsFormOpen(!isFormOpen)}>Anuluj</Button></Modal.Footer>
             </Modal>
             {user.role === "ADMIN" &&
-                <Form style={{'width': '150px'}}>
+                <Form style={{'width': '200px'}}>
                     <Form.Label>Wybierz kategorie</Form.Label>
                     <Form.Control as="select" name="category" onChange={change}>
                         <option disabled selected>Wszystkie kategorie</option>
@@ -170,77 +172,83 @@ export const TrainingPage = () => {
                     </Form.Control>
                 </Form>
             }
-            <h3>Aktualne szkolenia:</h3>
-            <Table>
-                <thead>
-                <tr>
-                    <th>Kursant</th>
-                    <th>Kategoria</th>
-                    <th>Rozpoczecie szkolenia</th>
-                    <th>Koniec szkolenia</th>
-                    <th>Wyjeżdzone godziny</th>
-                    <th>Ile wpłacono</th>
-                    <th>Koszt szkolenia</th>
-                </tr>
-                </thead>
+            <h3 className={"mt-3"}> Aktualne szkolenia:</h3>
+            <Frame>
+                <Table>
+                    <thead>
+                    <tr>
+                        <th>Kursant</th>
+                        <th>Kategoria</th>
+                        <th>Rozpoczecie szkolenia</th>
+                        <th>Wyjeżdzone godziny</th>
+                        <th>Ile wpłacono</th>
+                        <th>Koszt szkolenia</th>
+                    </tr>
+                    </thead>
 
-                <tbody>
-                {trainingList.map(t => (t.endDate === null &&
-                    <tr key={t.id}>
-                        <td>{t.user.firstName} {t.user.lastName}</td>
-                        <td>{t.licenceCategory.name}</td>
-                        <td>{format(new Date(t.startDate), 'dd/MM/yyyy')}</td>
-                        <td>{t.endDate ? format(new Date(t.endDate), 'dd/MM/yyyy') : ""}</td>
-                        <td>{t.drivingHours}</td>
-                        <td>{t.paid}</td>
-                        <td>{t.totalCost}</td>
-                        {user.role === "ADMIN" && <>
-                            <td><Button onClick={() => setNewPay({...newPay, id: t.id, show: true})}>Dodaj
-                                Wpłate</Button></td>
-                            <td><Button onClick={() => {
-                                setEndTrainingObject(t)
-                            }}>Zakończ szkolenie</Button></td>
-                        </>}
+                    <tbody>
+                    {trainingList.map(t => (t.endDate === null &&
+                        <tr key={t.id}>
+                            <td>{t.user.firstName} {t.user.lastName}</td>
+                            <td>{t.licenceCategory.name}</td>
+                            <td>{format(new Date(t.startDate), 'dd/MM/yyyy')}</td>
+                            {/*<td>{t.endDate ? format(new Date(t.endDate), 'dd/MM/yyyy') : ""}</td>*/}
+                            <td>{t.drivingHours}</td>
+                            <td>{t.paid}</td>
+                            <td>{t.totalCost}</td>
+                            {user.role === "ADMIN" && <>
+                                <td><Button onClick={() => setNewPay({...newPay, id: t.id, show: true})}>Dodaj
+                                    Wpłate</Button></td>
+                                <td><Button onClick={() => {
+                                    setEndTrainingObject(t)
+                                }}>Zakończ szkolenie</Button></td>
+                            </>}
 
-                    </tr>)
-                )}
-                </tbody>
-            </Table>
+                        </tr>)
+                    )}
+                    </tbody>
+                </Table>
+            </Frame>
 
-            <h3>Zakończone szkolenia:</h3>
-            <Table>
-                <thead>
-                <tr>
-                    <th>Kursant</th>
-                    <th>Kategoria</th>
-                    <th>Rozpoczecie szkolenia</th>
-                    <th>Koniec szkolenia</th>
-                    <th>Wyjeżdzone godziny</th>
-                    <th>Ile wpłacono</th>
-                    <th>Koszt szkolenia</th>
-                </tr>
-                </thead>
 
-                <tbody>
-                {trainingList.map(t => (t.endDate !== null &&
-                    <tr key={t.id}>
-                        <td>{t.user.firstName} {t.user.lastName}</td>
-                        <td>{t.licenceCategory.name}</td>
-                        <td>{format(new Date(t.startDate), 'dd/MM/yyyy')}</td>
-                        <td>{t.endDate ? format(new Date(t.endDate), 'dd/MM/yyyy') : ""}</td>
-                        <td>{t.drivingHours}</td>
-                        <td>{t.paid}</td>
-                        <td>{t.totalCost}</td>
-                        {user.role === "ADMIN" &&
-                            <td>
-                                <Button onClick={() => getDataForReport(t.id)}>Generuj Raport</Button>
-                            </td>
-                        }
+            <h3 className={"mt-3"}>Zakończone szkolenia:</h3>
+            <Frame>
+                <Table>
+                    <thead>
+                    <tr>
+                        <th>Kursant</th>
+                        <th>Kategoria</th>
+                        <th>Rozpoczecie szkolenia</th>
+                        <th>Koniec szkolenia</th>
+                        <th>Wyjeżdzone godziny</th>
+                        <th>Ile wpłacono</th>
+                        <th>Koszt szkolenia</th>
+                    </tr>
+                    </thead>
 
-                    </tr>)
-                )}
-                </tbody>
-            </Table>
+                    <tbody>
+                    {trainingList.map(t => (t.endDate !== null &&
+                        <tr key={t.id}>
+                            <td>{t.user.firstName} {t.user.lastName}</td>
+                            <td>{t.licenceCategory.name}</td>
+                            <td>{format(new Date(t.startDate), 'dd/MM/yyyy')}</td>
+                            <td>{t.endDate ? format(new Date(t.endDate), 'dd/MM/yyyy') : ""}</td>
+                            <td>{t.drivingHours}</td>
+                            <td>{t.paid}</td>
+                            <td>{t.totalCost}</td>
+                            {user.role === "ADMIN" &&
+                                <td>
+                                    <Button onClick={() => getDataForReport(t.id)}>Generuj Raport</Button>
+                                </td>
+                            }
+
+                        </tr>)
+                    )}
+                    </tbody>
+                </Table>
+            </Frame>
+
+
             <ModalCustom show={newPay.show} text="Dodaj wpłate" buttons={[{text: "Dodaj", action: changePayAmount}, {
                 text: "Anuluj",
                 action: () => setNewPay({show: false, value: 0, id: null})

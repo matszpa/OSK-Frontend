@@ -2,6 +2,7 @@ import {Button, Col, Form, Row} from "react-bootstrap";
 import {useEffect, useState} from "react";
 import styles from '../components/AdminPageComponents/AdminContent.module.scss'
 import {useNavigate} from "react-router-dom";
+import {Frame} from "../components/HelperComponents/Frame";
 
 export const AddNewUser = () => {
     const navigate = useNavigate();
@@ -52,53 +53,59 @@ export const AddNewUser = () => {
             .then((res) => navigate("/users"))
     }
     return (
-        <div className={styles.adminContainer}>
-            <p>Wprowadz dane uzytkownika</p>
-            <Form onSubmit={submit}>
-                <Form.Group>
-                    <Form.Label>Imie</Form.Label>
-                    <Form.Control value={user.firstName} name="firstName" type="input" onChange={changeUser}/>
-                </Form.Group>
-                <Form.Group>
-                    <Form.Label>Nazwisko</Form.Label>
-                    <Form.Control value={user.lastName} name="lastName" type="input" onChange={changeUser}/>
-                </Form.Group>
-                <Form.Group>
-                    <Form.Label>Number telefonu</Form.Label>
-                    <Form.Control value={user.phoneNumber} name="phoneNumber" type="number" onChange={changeUser}/>
-                </Form.Group>
-                <Form.Group>
-                    <Form.Label>Adres e-mail</Form.Label>
-                    <Form.Control value={user.email} name="email" as="input" onChange={changeUser}/>
-                </Form.Group>
-                <Form.Group>
-                    <Form.Label>Wybierz role</Form.Label>
-                    <Form.Control name="role" value={user.role} as="select" onChange={changeUser}>
-                        <option disabled selected>Wybierz typ użytkownika</option>
-                        <option value="STUDENT">Kursant</option>
-                        <option value="INSTRUCTOR">Instruktor</option>
-                    </Form.Control>
-                </Form.Group>
-                {user.role === "INSTRUCTOR" &&
-                    <Form.Group className="mb-1">
-                        <Form.Label>Wybierz kategorie dla instruktora</Form.Label>
-                        <Row>
-                            {categories.map((c) => (
-                                <Col sm={4} lg={1} key={c.id}>
-                                    <Form.Check type="checkbox"
-                                                checked={user.categories.some((item) => item === c.id)}
-                                                nome="categories"
-                                                label={c.name}
-                                                id={c.id}
-
-                                                onChange={checkbox}/>
-                                </Col>))}
-                        </Row>
+        <div style={{width: "70%", margin: "auto"}}>
+            <Frame>
+                <h3>Wprowadz dane uzytkownika</h3>
+                <Form onSubmit={submit} style={{width: "100%"}}>
+                    <Form.Group>
+                        <Form.Label>Imie</Form.Label>
+                        <Form.Control value={user.firstName} name="firstName" type="input" onChange={changeUser}/>
                     </Form.Group>
-                }
+                    <Form.Group>
+                        <Form.Label>Nazwisko</Form.Label>
+                        <Form.Control value={user.lastName} name="lastName" type="input" onChange={changeUser}/>
+                    </Form.Group>
+                    <Form.Group>
+                        <Form.Label>Number telefonu</Form.Label>
+                        <Form.Control value={user.phoneNumber} name="phoneNumber" type="number" onChange={changeUser}/>
+                    </Form.Group>
+                    <Form.Group>
+                        <Form.Label>Adres e-mail</Form.Label>
+                        <Form.Control value={user.email} name="email" as="input" onChange={changeUser}/>
+                    </Form.Group>
+                    <Form.Group>
+                        <Form.Label>Wybierz role</Form.Label>
+                        <Form.Control name="role" value={user.role} as="select" onChange={changeUser}>
+                            <option disabled selected>Wybierz typ użytkownika</option>
+                            <option value="STUDENT">Kursant</option>
+                            <option value="INSTRUCTOR">Instruktor</option>
+                        </Form.Control>
+                    </Form.Group>
+                    {user.role === "INSTRUCTOR" &&
+                        <Form.Group className="mb-1">
+                            <Form.Label>Wybierz kategorie dla instruktora</Form.Label>
+                            <Row>
+                                {categories.map((c) => (
+                                    <Col sm={4} lg={1} key={c.id}>
+                                        <Form.Check type="checkbox"
+                                                    checked={user.categories.some((item) => item === c.id)}
+                                                    nome="categories"
+                                                    label={c.name}
+                                                    id={c.id}
 
-                <Button className={"mt-2"} type="submit">Potwierdz</Button>
-            </Form>
+                                                    onChange={checkbox}/>
+                                    </Col>))}
+                            </Row>
+                        </Form.Group>
+                    }
+                    <div className={"mt-4"} style={{"display": "flex", justifyContent: "space-between"}}>
+                        <Button type="submit">Dodaj</Button>
+                        <Button onClick={() => navigate("/users")}>Anuluj</Button>
+                    </div>
+
+                </Form>
+            </Frame>
+
         </div>
     )
 }

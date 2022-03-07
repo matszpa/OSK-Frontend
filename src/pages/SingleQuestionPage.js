@@ -15,7 +15,7 @@ export const SingleQuestionPage = () => {
             .then((res) => {
                 setQuestion(res.question)
             })
-    }, [])
+    }, [Category])
     const sprawdz = () => {
         const yourAnswer = question.answers.findIndex((a) => a.content === selected)
         var data = {

@@ -1,10 +1,9 @@
-import {useState, useContext, createContext, useEffect} from "react";
-import {useNavigate} from "react-router-dom";
+import {useState, createContext, useEffect} from "react";
 
 const AuthContext = createContext({});
 export const AuthProvider = ({children}) => {
     const [user, setUser] = useState({username: '', role: ''});
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     useEffect(() => {
         if (localStorage.getItem("token")) {
             fetch("http://localhost:8000/user", {

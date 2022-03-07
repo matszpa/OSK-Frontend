@@ -16,7 +16,7 @@ export const Exam = (props) => {
                 setQuestionArray(res);
                 setCurrentQuestion(res[0]);
             });
-    }, [])
+    }, [Category])
 
     const choseAnswer = (answer) => {
         setSelectedAnswer(answer);
