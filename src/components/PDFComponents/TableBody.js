@@ -53,9 +53,9 @@ const TableBody = (props) => {
         <View style={styles.row} key={item.id}>
             <Text style={styles.tdIndex}>{index + 1}</Text>
             <Text style={styles.tdStyles}>{moment(item.day).format('MM/DD/YYYY')}</Text>
-            <Text style={styles.tdStyles}>{item.hour}</Text>
+            <Text style={styles.tdStyles}>{item.hour}:00</Text>
             <Text style={styles.tdStyles}>{item.status}</Text>
-            <Text style={styles.tdStyles}></Text>
+            <Text style={styles.tdStyles}>{item.user.firstName} {item.user.LastName}</Text>
         </View>)
     return (
         <Fragment>{rows}</Fragment>

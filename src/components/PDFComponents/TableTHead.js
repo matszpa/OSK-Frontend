@@ -49,7 +49,7 @@ const TableTHead = () => {
             <Text style={styles.tdStyles}>Data</Text>
             <Text style={styles.tdStyles}>Godzina</Text>
             <Text style={styles.tdStyles}>Status</Text>
-            <Text style={styles.tdStyles}>Podpis</Text>
+            <Text style={styles.tdStyles}>Instruktor</Text>
         </View>
     )
 }
