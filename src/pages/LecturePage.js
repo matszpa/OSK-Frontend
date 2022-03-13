@@ -1,0 +1,125 @@
+import {useEffect, useState} from "react";
+import {Button, Table} from "react-bootstrap";
+import {Frame} from "../components/HelperComponents/Frame";
+import {NewLectureModal} from "../components/LecturePageComponents/NewLectureModal";
+import moment from "moment";
+import {ChangeLectureStatus} from "../components/LecturePageComponents/ChangeLectureStatus";
+import {CancelLectureModal} from "../components/LecturePageComponents/CancelLectureModal";
+
+export const LecturePage = () => {
+    const [lectureList, setLectureList] = useState([])
+    const [showAddNew, setShowAddNew] = useState(false)
+    const [lecture, setLecture] = useState(null)
+    const [cancelLecture, setCancelLecture] = useState(null);
+    useEffect(() => {
+        fetch("http://localhost:8000/getLectures")
+            .then((res) => res.json())
+            .then((res) => setLectureList(res))
+    }, [])
+
+    const changePastLectureStatus = (lecture) => {
+        setLecture(lecture);
+    }
+    const changeStatus = (object) => {
+        fetch(`http://localhost:8000/changeStatusLectureStatus/${lecture.id}`, {
+            method: "PUT",
+            body: JSON.stringify(object),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        }).then((res) => res.json())
+            .then((res) => {
+                var array = lectureList;
+                array.map((lecture) => lecture.id === res.id ? lecture.status = res.status : lecture);
+                setLectureList(array)
+                setLecture(null)
+            })
+    }
+    const confirmCancelLecture = () => {
+        fetch(`http://localhost:8000/changeStatusLectureStatus/${cancelLecture.id}`, {
+            method: "PUT",
+            body: JSON.stringify({status: "Odwołany"}),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        }).then((res) => {
+            var array = lectureList;
+            array.map((lecture) => lecture.id === res.id ? lecture.status = res.status : lecture);
+            setLectureList(array)
+            setCancelLecture(null)
+        })
+
+
+    }
+    return (
+        <div>
+            <Button onClick={() => setShowAddNew(!showAddNew)}>Dodaj wykład</Button>
+            <NewLectureModal show={showAddNew} cancel={() => setShowAddNew(!showAddNew)}/>
+            <CancelLectureModal show={cancelLecture !== null} cancel={() => setCancelLecture(null)}
+                                confirmCancelLecture={confirmCancelLecture} lecture={cancelLecture}/>
+            <ChangeLectureStatus show={lecture !== null} cancel={() => setLecture(null)} lecture={lecture}
+                                 changeStatus={changeStatus}/>
+            <h2>Nadchodzące wykłady</h2>
+            <Frame>
+                <Table>
+                    <thead>
+                    <tr>
+                        <td>Data</td>
+                        <td>Kategoria</td>
+                        <td>Temat</td>
+                        <td>Prowadzący</td>
+                        <td>Status</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {lectureList.map(lecture => (new Date(lecture.date) > Date.now() &&
+                            <tr key={lecture.id}>
+                                <td>{moment(lecture.date).format("YYYY-MM-DD HH:mm")}</td>
+                                <td>{lecture.licenceCategory.name}</td>
+                                <td>{lecture.topic}</td>
+                                <td>{lecture.user.firstName} {lecture.user.lastName}</td>
+                                <td>{lecture.status}</td>
+                                <td style={{whiteSpace: 'nowrap'}}>
+                                    {lecture.status === "Zaplanowany" &&
+                                        <Button onClick={() => setCancelLecture(lecture)}>Odwołaj
+                                            wykład</Button>}
+                                </td>
+                            </tr>
+                        )
+                    )}
+                    </tbody>
+                </Table>
+            </Frame>
+            <h2>Historia wykładów</h2>
+            <Frame>
+                <Table>
+                    <thead>
+                    <tr>
+                        <td>Data</td>
+                        <td>Kategoria</td>
+                        <td>Temat</td>
+                        <td>Prowadzący</td>
+                        <td>Status</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {lectureList.map(lecture => (new Date(lecture.date) < Date.now() &&
+                            <tr key={lecture.id}>
+                                <td>{moment(lecture.date).format("YYYY-MM-DD HH:mm")}</td>
+                                <td>{lecture.licenceCategory.name}</td>
+                                <td>{lecture.topic}</td>
+                                <td>{lecture.user.firstName} {lecture.user.lastName}</td>
+                                <td>{lecture.status}</td>
+                                <td style={{whiteSpace: 'nowrap'}}>
+                                    {lecture.status !== "Ukończony" &&
+                                        <Button onClick={() => changePastLectureStatus(lecture)}>
+                                            Zmień status</Button>}
+                                </td>
+                            </tr>
+                        )
+                    )}
+                    </tbody>
+                </Table>
+            </Frame>
+        </div>)
+}

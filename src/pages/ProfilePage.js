@@ -1,11 +1,11 @@
 import styles from './ProfilePage.module.scss'
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {Frame} from "../components/HelperComponents/Frame";
 import {Button, Form} from 'react-bootstrap'
 import {Message} from "../components/HelperComponents/Message";
 
 export const ProfilePage = () => {
-    const [user, setUser] = useState(null)
+    const [userData, setUserData] = useState(null)
     const [password, setPassword] = useState(null)
     const [emailChange, setEmailChange] = useState({
         email: "",
@@ -26,7 +26,7 @@ export const ProfilePage = () => {
                 token: localStorage.getItem("token"),
             },
         }).then((res) => res.json())
-            .then((res) => setUser(res))
+            .then((res) => setUserData(res))
             .catch((err) => console.log(err))
     }, [])
     const changePassword = (e) => {
@@ -85,10 +85,11 @@ export const ProfilePage = () => {
         <div className={styles.profilePage}>
             <Frame className={styles.frameStyles}>
                 <h3>Twoje dane</h3>
-                <div>{user?.firstName} {user?.lastName}</div>
-                <div><span>Numer telefonu:</span> {user?.phoneNumber}</div>
-                <div><span>Adres email:</span> {user?.email}</div>
+                <div>{userData?.firstName} {userData?.lastName}</div>
+                <div><span>Numer telefonu:</span> {userData?.phoneNumber}</div>
+                <div><span>Adres email:</span> {userData?.email}</div>
             </Frame>
+
             <div className={styles.bottomDiv}>
                 <Frame>
                     <h4>Zmień hasło</h4>

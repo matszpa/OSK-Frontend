@@ -15,6 +15,7 @@ import {TrainingPage} from "./pages/TrainingPage";
 import {Container} from "./components/HelperComponents/Container";
 import {DrivingPage} from "./pages/DrivingPage";
 import {ProfilePage} from "./pages/ProfilePage";
+import {LecturePage} from "./pages/LecturePage";
 
 function App() {
     return (
@@ -37,6 +38,7 @@ function App() {
                     <Route path="/training" element={<TrainingPage/>}/>
                     <Route path="/driving" element={<DrivingPage/>}/>
                     <Route path="/profile" element={<ProfilePage/>}/>
+                    <Route path="/lecture" element={<LecturePage/>}/>
                 </Routes>
             </Container>
 

@@ -3,6 +3,7 @@ import {Link} from "react-router-dom";
 import {Category} from "./Category";
 import styles from './CategoryList.module.scss'
 import {useNavigate} from "react-router-dom";
+import {ExamHistoryTable} from "../ProfilePageComponents/ExamHistoryTable";
 
 export const CategoryList = () => {
     const navigate = useNavigate();
@@ -23,13 +24,22 @@ export const CategoryList = () => {
             });
     }, [])
     return (
-        <div className={styles.wrapper}>
-            {/*            {categories.map((c)=><li key={c.id}>{c.name}</li>) }*/}
-            {categories.map((c) =>
-                <Link key={c.id} to={c.name}>
-                    <Category key={c.id} name={c.name}/>
-                </Link>
-            )}
+        <div>
+            <div className={styles.wrapper}>
+                {/*            {categories.map((c)=><li key={c.id}>{c.name}</li>) }*/}
+                {categories.map((c) =>
+                    <Link key={c.id} to={c.name}>
+                        <Category key={c.id} name={c.name}/>
+                    </Link>
+                )}
+
+            </div>
+
+            <div className={"mt-2 mb-2"}>
+                <h2>Historia wykonanych egzaminów</h2>
+                <ExamHistoryTable/>
+            </div>
         </div>
+
     )
 }

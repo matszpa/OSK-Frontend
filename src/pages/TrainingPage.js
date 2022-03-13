@@ -236,12 +236,9 @@ export const TrainingPage = () => {
                             <td>{t.drivingHours}</td>
                             <td>{t.paid}</td>
                             <td>{t.totalCost}</td>
-                            {user.role === "ADMIN" &&
-                                <td>
-                                    <Button onClick={() => getDataForReport(t.id)}>Generuj Raport</Button>
-                                </td>
-                            }
-
+                            <td>
+                                <Button onClick={() => getDataForReport(t.id)}>Generuj Raport</Button>
+                            </td>
                         </tr>)
                     )}
                     </tbody>
