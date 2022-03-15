@@ -36,15 +36,17 @@ export const AddEditQuestion = (props) => {
         event.preventDefault()
         var formDataValues = new FormData()
         formDataValues.append("file", file);
-        for (let name in formData) {
-            if (Array.isArray(formData[name])) {
-                formData[name].forEach((object, index) => formDataValues.append(name, JSON.stringify(object)))
+        var stateFormData = formData;
+        if (stateFormData.answers[2].content === "") {
+            delete stateFormData.answers.pop();
+        }
+        for (let name in stateFormData) {
+            if (Array.isArray(stateFormData[name])) {
+                stateFormData[name].forEach((object, index) => formDataValues.append(name, JSON.stringify(object)))
             } else {
-                formDataValues.append(name, formData[name]);
+                formDataValues.append(name, stateFormData[name]);
             }
         }
-
-
         fetch("http://localhost:8000/addQuestion", {
             method: "POST",
             body: formDataValues,
