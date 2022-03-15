@@ -22,7 +22,7 @@ export const AddEditQuestion = (props) => {
                 setCategories(data)
             });
         if (id) {
-            fetch("http://localhost:8000/getSIngleQuestion/3165")
+            fetch(`http://localhost:8000/getSIngleQuestion/${id}`)
                 .then((res) => res.json())
                 .then((res) => {
                     var tmp = res.question;
@@ -112,12 +112,11 @@ export const AddEditQuestion = (props) => {
                                  placeHolderText={"B"}
                                  answer={formData.answers[1]}
                     />
-
-                    {abc || (id && formData.answers.length === 3 ? true : false) &&
+                    {((abc) || (id && formData.answers.length === 3)) &&
                         <AnswerInput choseCorrectRadio={choseCorrectRadio} answerChange={answerChange} index={2}
                                      answer={formData.answers[2]}
                                      placeHolderText={"C"}/>}
-                    {!abc || (id && formData.answers.length === 3 ? false : true) &&
+                    {((!abc) || ((id && formData.answers.length === 3))) &&
                         <Button onClick={() => setAbc(true)}>Dodaj kolejną odpowiedz</Button>}
                 </Form.Group>
                 <Form.Group>

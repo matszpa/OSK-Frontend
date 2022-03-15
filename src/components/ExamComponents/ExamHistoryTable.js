@@ -16,7 +16,7 @@ export const ExamHistoryTable = (props) => {
             .then((res) => {
                 setData(res)
             })
-    })
+    }, [])
     return (
         <Frame>
             <Table striped bordered hover size="sm">

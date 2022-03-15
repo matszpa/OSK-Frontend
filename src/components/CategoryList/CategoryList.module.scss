@@ -1,11 +1,31 @@
 .wrapper {
   margin: auto;
-  display: grid;
+  display: block;
 
   //grid-template-columns: repeat(3, 1fr);
-  grid-template-columns:300px 300px;
-  grid-gap: 40px;
+  //grid-template-columns:300px 300px;
+  //grid-gap: 40px;
   //grid-auto-rows: minmax(100px, auto);
+  ul {
+    list-style: none;
+    padding: 0;
+
+    li {
+      padding: 1rem;
+      font-weight: 400;
+      letter-spacing: 2px;
+      margin-bottom: 1rem;
+      border: #3a3a3a 1px solid;
+      border-radius: 20px;
+      background-color: #c9c9c9;
+      transition: all .2s ease-in;
+    }
+
+    li:hover {
+      letter-spacing: 4px;
+    }
+  }
+
   @media only screen and (max-width: 900px) {
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 40px;

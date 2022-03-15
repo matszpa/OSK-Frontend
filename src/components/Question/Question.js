@@ -36,7 +36,7 @@ export const Question = (props) => {
                                 <input
                                     type="radio"
                                     value={a.content}
-                                    checked={answer === a.content}
+                                    checked={answer === a.content || a?.correct}
                                 /> {a.content}
                             </div>
                         </div> :
