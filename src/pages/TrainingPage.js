@@ -194,8 +194,8 @@ export const TrainingPage = () => {
                             <td>{format(new Date(t.startDate), 'dd/MM/yyyy')}</td>
                             {/*<td>{t.endDate ? format(new Date(t.endDate), 'dd/MM/yyyy') : ""}</td>*/}
                             <td>{t.drivingHours}</td>
-                            <td>{t.paid}</td>
-                            <td>{t.totalCost}</td>
+                            <td>{t.paid} zł</td>
+                            <td>{t.totalCost} zł</td>
                             {user.role === "ADMIN" && <>
                                 <td><Button onClick={() => setNewPay({...newPay, id: t.id, show: true})}>Dodaj
                                     Wpłate</Button></td>
@@ -234,8 +234,8 @@ export const TrainingPage = () => {
                             <td>{format(new Date(t.startDate), 'dd/MM/yyyy')}</td>
                             <td>{t.endDate ? format(new Date(t.endDate), 'dd/MM/yyyy') : ""}</td>
                             <td>{t.drivingHours}</td>
-                            <td>{t.paid}</td>
-                            <td>{t.totalCost}</td>
+                            <td>{t.paid} zł</td>
+                            <td>{t.totalCost} zł</td>
                             <td>
                                 <Button onClick={() => getDataForReport(t.id)}>Generuj Raport</Button>
                             </td>

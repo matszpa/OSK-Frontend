@@ -1,5 +1,5 @@
 import styles from './ProfilePage.module.scss'
-import {useContext, useEffect, useState} from "react";
+import {useEffect, useState} from "react";
 import {Frame} from "../components/HelperComponents/Frame";
 import {Button, Form} from 'react-bootstrap'
 import {Message} from "../components/HelperComponents/Message";

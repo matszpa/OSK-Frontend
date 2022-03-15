@@ -3,9 +3,8 @@ import {useEffect, useState} from "react";
 import styles from './AddEditQuestion.module.scss'
 import {useParams} from "react-router-dom";
 
-export const AddEditQuestion = (props) => {
+export const AddQuestion = (props) => {
     const [abc, setAbc] = useState(false)
-    const {id} = useParams();
     const [formData, setFormData] = useState({
         question: "",
         type: "",
@@ -21,16 +20,6 @@ export const AddEditQuestion = (props) => {
             .then(data => {
                 setCategories(data)
             });
-        if (id) {
-            fetch(`http://localhost:8000/getSIngleQuestion/${id}`)
-                .then((res) => res.json())
-                .then((res) => {
-                    var tmp = res.question;
-                    tmp.cattegory_question = res.cattegory_question;
-                    setFormData(tmp)
-                });
-        }
-
     }, [])
     const doAction = async (event) => {
         event.preventDefault()
@@ -95,7 +84,7 @@ export const AddEditQuestion = (props) => {
 
     return (
         <div className={styles.editQuestionContainer}>
-            <h2>Formularz {id ? "edycji" : "dodawania"} pytania</h2>
+            <h2>Formularz dodawania pytania</h2>
             <Form onSubmit={doAction}>
                 <Form.Group className="mb-1">
                     <Form.Label>Treść pytania</Form.Label>
@@ -114,11 +103,11 @@ export const AddEditQuestion = (props) => {
                                  placeHolderText={"B"}
                                  answer={formData.answers[1]}
                     />
-                    {((abc) || (id && formData.answers.length === 3)) &&
+                    {abc &&
                         <AnswerInput choseCorrectRadio={choseCorrectRadio} answerChange={answerChange} index={2}
                                      answer={formData.answers[2]}
                                      placeHolderText={"C"}/>}
-                    {((!abc) || ((id && formData.answers.length === 3))) &&
+                    {!abc &&
                         <Button onClick={() => setAbc(true)}>Dodaj kolejną odpowiedz</Button>}
                 </Form.Group>
                 <Form.Group>
@@ -169,7 +158,7 @@ export const AddEditQuestion = (props) => {
                     </Row>
                 </Form.Group>
                 <Button variant="primary" type="submit">
-                    {id ? "Edytuj" : "Dodaj"}
+                    Dodaj
                 </Button>
             </Form>
 

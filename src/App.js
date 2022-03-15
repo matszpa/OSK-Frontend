@@ -5,7 +5,7 @@ import {SingleQuestionPage} from "./pages/SingleQuestionPage";
 import {HomePage} from "./pages/HomePage";
 import {CategoryList} from "./components/CategoryList/CategoryList";
 import {ExamPage} from "./pages/ExamPage";
-import {AddEditQuestion} from "./components/AdminPageComponents/AddEditQuestion";
+import {AddQuestion} from "./components/AdminPageComponents/AddQuestion";
 import {NotFound} from "./components/NotFound/NotFound";
 import {QuestionList} from "./components/AdminPageComponents/QuestionList";
 import {LoginPage} from "./pages/LoginPage";
@@ -31,8 +31,7 @@ function App() {
                     <Route path="/exam/" element={<CategoryList/>}/>
                     <Route path="/exam/:Category" element={<ExamPage/>}/>
                     <Route path="/qustions" element={<QuestionList/>}/>
-                    <Route path="/addQuestion" element={<AddEditQuestion/>}/>
-                    <Route path="/editQuestion/:id" element={<AddEditQuestion/>}/>
+                    <Route path="/addQuestion" element={<AddQuestion/>}/>
                     <Route path="/users" element={<UserListPage/>}/>
                     <Route path="/users/addNewUser" element={<AddNewUser/>}/>
                     <Route path="/training" element={<TrainingPage/>}/>

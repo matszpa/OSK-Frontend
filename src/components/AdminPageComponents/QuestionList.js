@@ -1,7 +1,6 @@
 import {useEffect, useState} from "react";
 import styles from './QuestionList.module.scss'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import EditIcon from '@mui/icons-material/Edit';
 import {Question} from "../Question/Question";
 import {Link, useNavigate} from "react-router-dom";
 import {Button, Modal} from "react-bootstrap";
@@ -34,9 +33,6 @@ export const QuestionList = () => {
             .then((res) => setQuestionArray(questionArray.filter((q) => q.id !== res)))
         setShowDelete(false)
     }
-    const edit = (id) => {
-        navigate(`/editQuestion/${id}`);
-    }
     return (
         <div className={styles.container}>
             <Modal show={showDelete}>
@@ -51,9 +47,6 @@ export const QuestionList = () => {
                     <p className={styles.questionContent}>Identyfikator pytania: {q.id}<span>
                         <DeleteForeverIcon
                             onClick={() => deleteQuestion(q.id)}/>
-                        <EditIcon
-                            onClick={() => edit(q.id)}
-                        />
                     </span>
                     </p>
                     <Question key={q.id} question={q}/>
