@@ -24,9 +24,7 @@ export const AddNewUser = () => {
 
     }, [])
     const changeUser = (e) => {
-        setUser({
-            ...user, [e.target.name]: e.target.value
-        })
+        setUser({...user, [e.target.name]: e.target.value})
     }
     const checkbox = (event) => {
         let catId = parseInt(event.target.id)

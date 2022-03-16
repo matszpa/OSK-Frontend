@@ -101,7 +101,7 @@ export const LecturePage = () => {
                     </tbody>
                 </Table>
             </Frame>
-            <h2>Historia wykładów</h2>
+            <h2 className={"mt-3"}>Historia wykładów</h2>
             <Frame>
                 <Table>
                     <thead>
