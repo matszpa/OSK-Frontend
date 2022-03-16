@@ -10,8 +10,9 @@ export const QuestionList = () => {
     const navigate = useNavigate();
     const [showDelete, setShowDelete] = useState(false);
     const [questionId, setQuestionId] = useState(null);
+    const [offset, setOffset] = useState(0);
     useEffect(() => {
-        fetch("http://localhost:8000/questionList")
+        fetch(`http://localhost:8000/questionList?limit=10&offset=${offset}`)
             .then((res) => res.json())
             .then((res) => {
                 console.log(res)
@@ -32,6 +33,15 @@ export const QuestionList = () => {
         }).then((res) => res.json())
             .then((res) => setQuestionArray(questionArray.filter((q) => q.id !== res)))
         setShowDelete(false)
+    }
+    const changePage = (number) => {
+        var nextOffset = offset + number;
+        setOffset(nextOffset);
+        fetch(`http://localhost:8000/questionList?limit=10&offset=${nextOffset}`)
+            .then((res) => res.json())
+            .then((res) => {
+                setQuestionArray(res)
+            })
     }
     return (
         <div className={styles.container}>
@@ -54,6 +64,11 @@ export const QuestionList = () => {
 
             ))
             }
+            <div style={{display: "flex", justifyContent: "space-between"}}>
+                <Button onClick={() => changePage(-10)}>Poprzednia strona</Button>
+                <Button onClick={() => changePage(10)}>Następna strona</Button>
+            </div>
+
         </div>
 
     )

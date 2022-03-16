@@ -12,27 +12,32 @@ const styles = StyleSheet.create({
         height: 24,
         textAlign: 'center',
         flexGrow: 1,
+        marginTop: 10
     },
     tdStyles: {
         width: "20%",
         textAlign: "center"
     },
+
     tdIndex: {
         width: "10%",
         textAlign: "left",
         paddingLeft: 10
+    },
+    tdTopic: {
+        width: "25%",
     }
 });
-const TableTHead = () => {
+const LectureThead = () => {
     return (
         <View style={styles.container}>
             <Text style={styles.tdIndex}>Lp.</Text>
             <Text style={styles.tdStyles}>Data</Text>
-            <Text style={styles.tdStyles}>Godzina</Text>
-            <Text style={styles.tdStyles}>Status</Text>
-            <Text style={styles.tdStyles}>Instruktor</Text>
+            <Text style={styles.tdTopic}>Temat</Text>
+            <Text style={styles.tdStyles}>Czas trwania</Text>
+            <Text style={styles.tdStyles}>Czy obecny</Text>
         </View>
     )
 }
 
-export default TableTHead;
+export default LectureThead;

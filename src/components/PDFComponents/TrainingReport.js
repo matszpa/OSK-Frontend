@@ -1,17 +1,24 @@
-import {Page, Text, View, Document, StyleSheet} from '@react-pdf/renderer';
+import {Page, Text, View, Font, Document, StyleSheet} from '@react-pdf/renderer';
 import TableTHead from "./TableTHead";
 import TableBody from "./TableBody";
 import moment from 'moment';
-
+import LectureThead from "./LectureThead";
+import LectureTbody from "./LectureTbody";
+import font from './roboto-light-webfont.ttf';
+// Register Font
+Font.register({
+    family: 'Roboto', src: font
+});
 const styles = StyleSheet.create({
     page: {
-        fontFamily: 'Helvetica',
+        fontFamily: "Roboto",
         fontSize: 11,
         paddingTop: 30,
         paddingLeft: 60,
         paddingRight: 60,
         lineHeight: 1.5,
         flexDirection: 'column',
+
     },
     header: {
         fontSize: 20,
@@ -33,14 +40,23 @@ const TrainingReport = (props) => {
                         <View>
                             <Text style={styles.header}>Raport szkolenia</Text>
                             <Text
-                                style={styles.student}>Kursant: {props.data.user.firstName} {props.data.user.lastName} Kategoria:{props.data.licenceCategory.name}</Text>
+                                style={styles.student}>Kursant: {props.data.user.firstName} {props.data.user.lastName} </Text>
+                            <Text>Kategoria:{props.data.licenceCategory.name}</Text>
                             <Text>Data rozpoczecia szkolenia:{moment(props.data.startDate).format('MM/DD/YYYY')}</Text>
                             <Text>Data zakonczenia szkolenia:{moment(props.data.endDate).format('MM/DD/YYYY')}</Text>
-                            <TableTHead/>
-                            <TableBody data={props.data?.drivings}/>
+                            <Text>Koszt szkolenia: {props.data.paid} zł</Text>
+                            <LectureThead/>
+                            <LectureTbody data={props.data?.lecturePresences}/>
 
                         </View>
 
+                    </Page>
+                    <Page size="A4" style={styles.page}>
+                        <View>
+                            <Text>Spis zrealizowanych jazd</Text>
+                            <TableTHead/>
+                            <TableBody data={props.data?.drivings}/>
+                        </View>
                     </Page>
                 </Document>
             }</>
