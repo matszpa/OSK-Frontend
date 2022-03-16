@@ -39,7 +39,6 @@ export const AddNewUser = () => {
     }
     const submit = (e) => {
         e.preventDefault()
-        console.log(user)
         fetch("http://localhost:8000/newUser", {
             method: "POST",
             body: JSON.stringify(user),
