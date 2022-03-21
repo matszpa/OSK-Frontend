@@ -3,9 +3,23 @@ import {useEffect, useState} from "react";
 import styles from '../components/AdminPageComponents/AdminContent.module.scss'
 import {useNavigate} from "react-router-dom";
 import {Frame} from "../components/HelperComponents/Frame";
+import {useForm} from 'react-hook-form';
+import {yupResolver} from "@hookform/resolvers/yup";
+import * as yup from 'yup';
+
+const schema = yup.object().shape({
+    firstName: yup.string().required("Imie jest wymagane"),
+    lastName: yup.string().required("Nazwisko jest wymagane"),
+    phoneNumber: yup.number("Wprowadz numer").typeError('Numer jest wymagany').positive("Numer nie moze byc ujemny").integer("Liczba musi byc całkowita"),
+    email: yup.string().email("To nie jest email").required("Email jest wymagany"),
+    role: yup.string().required("Rola jest wymagana"),
+})
 
 export const AddNewUser = () => {
     const navigate = useNavigate();
+    const {register, handleSubmit, formState: {errors}} = useForm({
+        resolver: yupResolver(schema),
+    });
     const [user, setUser] = useState({
         firstName: "",
         lastName: "",
@@ -38,7 +52,6 @@ export const AddNewUser = () => {
         });
     }
     const submit = (e) => {
-        e.preventDefault()
         fetch("http://localhost:8000/newUser", {
             method: "POST",
             body: JSON.stringify(user),
@@ -53,30 +66,47 @@ export const AddNewUser = () => {
         <div style={{width: "70%", margin: "auto"}}>
             <Frame>
                 <h3>Wprowadz dane uzytkownika</h3>
-                <Form onSubmit={submit} style={{width: "100%"}}>
+                <Form onSubmit={handleSubmit(submit)} style={{width: "100%"}}>
                     <Form.Group>
                         <Form.Label>Imie</Form.Label>
-                        <Form.Control value={user.firstName} name="firstName" type="input" onChange={changeUser}/>
+                        <Form.Control name="firstName" type="input" id="firstName"
+                                      {...register('firstName')}
+                                      onChange={changeUser}/>
+
+                        <p className={"text-danger"}>{errors.firstName?.message}</p>
                     </Form.Group>
+
                     <Form.Group>
                         <Form.Label>Nazwisko</Form.Label>
-                        <Form.Control value={user.lastName} name="lastName" type="input" onChange={changeUser}/>
+                        <Form.Control name="lastName" type="input"
+                                      {...register('lastName')}
+                                      onChange={changeUser}/>
+                        <p className={"text-danger"}>{errors.lastName?.message}</p>
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>Number telefonu</Form.Label>
-                        <Form.Control value={user.phoneNumber} name="phoneNumber" type="number" onChange={changeUser}/>
+                        <Form.Control name="phoneNumber" type="number"
+                                      {...register('phoneNumber')}
+                                      onChange={changeUser}/>
+                        <p className={"text-danger"}>{errors.phoneNumber?.message}</p>
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>Adres e-mail</Form.Label>
-                        <Form.Control value={user.email} name="email" as="input" onChange={changeUser}/>
+                        <Form.Control name="email" as="input"
+                                      {...register('email')}
+                                      onChange={changeUser}/>
+                        <p className={"text-danger"}>{errors.email?.message}</p>
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>Wybierz role</Form.Label>
-                        <Form.Control name="role" value={user.role} as="select" onChange={changeUser}>
+                        <Form.Control name="role" value={user.role} as="select"
+                                      {...register('role')}
+                                      onChange={changeUser}>
                             <option disabled selected>Wybierz typ użytkownika</option>
                             <option value="STUDENT">Kursant</option>
                             <option value="INSTRUCTOR">Instruktor</option>
                         </Form.Control>
+                        <p className={"text-danger"}>{errors.role?.message}</p>
                     </Form.Group>
                     {user.role === "INSTRUCTOR" &&
                         <Form.Group className="mb-1">

@@ -93,7 +93,7 @@ export const ChangeLectureStatus = (props) => {
 
             </Modal.Body>
             <Modal.Footer>
-                <Button onClick={formSubmit}>Dodaj</Button>
+                <Button onClick={formSubmit}>Zatwierdź</Button>
                 <Button onClick={props.cancel}>Anuluj</Button>
             </Modal.Footer>
         </Modal>

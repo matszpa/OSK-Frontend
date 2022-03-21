@@ -4,7 +4,6 @@ import {format} from "date-fns";
 import moment from 'moment';
 
 export const DrivingForm = (props) => {
-    const [selectedInstructor, seSelectedInstructor] = useState(null)
     const [instructorList, setInstructorList] = useState([])
     const [categories, setCategories] = useState([])
     const [hours, setHours] = useState([]);
@@ -118,8 +117,8 @@ export const DrivingForm = (props) => {
                                         {studentList.length > 0 ? studentList.map((s) =>
                                             <option
                                                 key={s.id}
-                                                value={s.id}>{s.user.firstName} {s.user.lastName} Rozpoczął:{format(new Date(s.startDate), 'dd/MM/yyyy')} Wyjeżdżone
-                                                godziny:{s.drivingHours}</option>) : ""}
+                                                value={s.id}>{s.user.firstName} {s.user.lastName} Rozpoczął: {format(new Date(s.startDate), 'dd/MM/yyyy')} Wyjeżdżone
+                                                godziny: {s.drivingHours}</option>) : ""}
                                     </Form.Control>
                                 </td>
                             </tr> : "")

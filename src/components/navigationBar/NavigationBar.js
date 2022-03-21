@@ -5,6 +5,7 @@ import {Link, NavLink} from "react-router-dom";
 import AuthContext from "../../Context/AuthProvider";
 import {useNavigate} from "react-router-dom";
 import {LecturePage} from "../../pages/LecturePage";
+import logoBorder from './logoBorder.png'
 
 const NavigationBar = () => {
     const navigate = useNavigate();
@@ -21,7 +22,8 @@ const NavigationBar = () => {
     return (
         <nav className={styles.navHeader}>
             <Link to="/"><img className={styles.logo}
-                              src="https://cdn3.iconfinder.com/data/icons/font-awesome-solid/512/car-512.png"/></Link>
+                              alt="logo"
+                              src={logoBorder}/></Link>
             <ul className={styles.nav_link}>
                 {/*{user.role === 'STUDENT' && <>*/}
                 {/*    /!*<LiLink link="/singleQuestion" text="Jedno pytanie"/>*!/*/}

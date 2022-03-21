@@ -84,7 +84,7 @@ export const AddQuestion = (props) => {
 
     return (
         <div className={styles.editQuestionContainer}>
-            <h2>Formularz dodawania pytania</h2>
+            <h2>Dodaj pytanie</h2>
             <Form onSubmit={doAction}>
                 <Form.Group className="mb-1">
                     <Form.Label>Treść pytania</Form.Label>

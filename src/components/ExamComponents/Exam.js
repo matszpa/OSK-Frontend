@@ -16,24 +16,17 @@ export const Exam = (props) => {
                 setQuestionArray(res);
                 setCurrentQuestion(res[0]);
             });
-    }, [])
+    }, [Category])
 
     const choseAnswer = (answer) => {
         setSelectedAnswer(answer);
 
     }
     const nextQuestion = (e) => {
-        // if (e.target.innerHTML === "Zakończ")
-        //     props.changeTab("End")
-
-        // const isCorrect = currentQuestion.question.answers.find((a) => a.content === selectedAnswer)
         const currenctQIndex = questionArray.findIndex(q => q.question.id === currentQuestion.question.id)
         var array = questionArray;
         array[currenctQIndex].question.answers.map((a) => a.content === selectedAnswer ? a.selected = true : a.selected = false)
         setQuestionArray(array)
-        // if (isCorrect.correct) {
-        //     props.changePoints(currentQuestion.question.points);
-        // }
         var tmp = idArray;
         var answer = currentQuestion.question.answers.find((q) => q.content === selectedAnswer);
         tmp.push({

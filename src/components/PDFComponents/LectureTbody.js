@@ -2,7 +2,6 @@ import {Fragment} from "react";
 import {View, Text, StyleSheet} from '@react-pdf/renderer'
 import moment from 'moment';
 
-const borderColor = '#90e5fc'
 const styles = StyleSheet.create({
     row: {
         flexDirection: 'row',
@@ -33,7 +32,7 @@ const TableBody = (props) => {
             <Text style={styles.tdIndex}>{index + 1}</Text>
             <Text style={styles.tdStyles}>{moment(item.lecture.date).format('MM/DD/YYYY HH:MM')}</Text>
             <Text style={styles.tdTopic}>{item.lecture.topic}</Text>
-            <Text style={styles.tdStyles}>{item.lecture.duration}</Text>
+            <Text style={styles.tdStyles}>{item.lecture.duration} h</Text>
             <Text style={styles.tdStyles}>{item.isPresent ? "Tak" : "Nie"}</Text>
         </View>)
     return (

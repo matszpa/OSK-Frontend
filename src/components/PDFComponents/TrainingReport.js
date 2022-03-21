@@ -5,7 +5,7 @@ import moment from 'moment';
 import LectureThead from "./LectureThead";
 import LectureTbody from "./LectureTbody";
 import font from './roboto-light-webfont.ttf';
-// Register Font
+
 Font.register({
     family: 'Roboto', src: font
 });
@@ -41,9 +41,9 @@ const TrainingReport = (props) => {
                             <Text style={styles.header}>Raport szkolenia</Text>
                             <Text
                                 style={styles.student}>Kursant: {props.data.user.firstName} {props.data.user.lastName} </Text>
-                            <Text>Kategoria:{props.data.licenceCategory.name}</Text>
-                            <Text>Data rozpoczecia szkolenia:{moment(props.data.startDate).format('MM/DD/YYYY')}</Text>
-                            <Text>Data zakonczenia szkolenia:{moment(props.data.endDate).format('MM/DD/YYYY')}</Text>
+                            <Text>Kategoria: {props.data.licenceCategory.name}</Text>
+                            <Text>Data rozpoczecia szkolenia: {moment(props.data.startDate).format('MM/DD/YYYY')}</Text>
+                            <Text>Data zakonczenia szkolenia: {moment(props.data.endDate).format('MM/DD/YYYY')}</Text>
                             <Text>Koszt szkolenia: {props.data.paid} zł</Text>
                             <LectureThead/>
                             <LectureTbody data={props.data?.lecturePresences}/>
@@ -53,7 +53,7 @@ const TrainingReport = (props) => {
                     </Page>
                     <Page size="A4" style={styles.page}>
                         <View>
-                            <Text>Spis zrealizowanych jazd</Text>
+                            <Text style={styles.header}>Spis zrealizowanych jazd</Text>
                             <TableTHead/>
                             <TableBody data={props.data?.drivings}/>
                         </View>

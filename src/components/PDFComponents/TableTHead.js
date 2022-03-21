@@ -1,6 +1,5 @@
 import {View, Text, StyleSheet} from "@react-pdf/renderer";
 
-const borderColor = '#90e5fc'
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
@@ -14,8 +13,8 @@ const styles = StyleSheet.create({
         flexGrow: 1,
     },
     tdStyles: {
-        width: "20%",
-        textAlign: "center"
+        width: "30%",
+        textAlign: "left"
     },
     tdIndex: {
         width: "10%",
@@ -28,7 +27,6 @@ const TableTHead = () => {
         <View style={styles.container}>
             <Text style={styles.tdIndex}>Lp.</Text>
             <Text style={styles.tdStyles}>Data</Text>
-            <Text style={styles.tdStyles}>Godzina</Text>
             <Text style={styles.tdStyles}>Status</Text>
             <Text style={styles.tdStyles}>Instruktor</Text>
         </View>
