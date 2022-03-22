@@ -126,10 +126,10 @@ export const ProfilePage = () => {
                               changeProfile={changeProfile}
                               cancel={() => setShowEdit(false)}/>
             <div className={styles.bottomDiv}>
-                <Frame>
+                <Frame className={styles.profileFrame}>
                     <h4>Zmień hasło</h4>
                     <div>
-                        <Form onSubmit={passwordHandleSumbit(changePassword)}>
+                        <Form onSubmit={passwordHandleSumbit(changePassword)} style={{width: "100%"}}>
                             <Form.Control name="old_password" type="password"
                                           {...passwordRegister('old_password')}
                                           placeholder="Stare hasło"/>
@@ -147,7 +147,7 @@ export const ProfilePage = () => {
 
                     </div>
                 </Frame>
-                <Frame>
+                <Frame className={styles.profileFrame}>
                     <h4>Zmień Email</h4>
                     <div>
                         <Form onSubmit={emailHandleSumbit(changeEmail)}>

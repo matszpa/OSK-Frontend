@@ -37,8 +37,14 @@ function App() {
                             <Route path="/exam/:Category" element={<ExamPage/>}/>
                             <Route path="/qustions" element={<QuestionList/>}/>
                             <Route path="/addQuestion" element={<AddQuestion/>}/>
-                            <Route path="/users" element={<UserListPage/>}/>
-                            <Route path="/users/addNewUser" element={<AddNewUser/>}/>
+                            <Route path="/users" element={
+                                <ProtectedRoute authorizedUser="ADMIN">
+                                    <UserListPage/>
+                                </ProtectedRoute>}/>
+                            <Route path="/users/addNewUser" element={
+                                <ProtectedRoute authorizedUser="ADMIN">
+                                    <AddNewUser/>
+                                </ProtectedRoute>}/>
                             <Route path="/training" element={<TrainingPage/>}/>
                             <Route path="/driving" element={<DrivingPage/>}/>
                             <Route path="/profile" element={<ProfilePage/>}/>
@@ -54,3 +60,12 @@ function App() {
 }
 
 export default App;
+
+const ProtectedRoute = (props) => {
+    const {user} = useContext(AuthContext);
+    if (user.role === props.authorizedUser) {
+        return props.children;
+    } else {
+        return (<NotFound/>)
+    }
+}

@@ -2,6 +2,7 @@ import {Button, Form, Table} from "react-bootstrap";
 import {useEffect, useState} from "react";
 import {format} from "date-fns";
 import moment from 'moment';
+import {Frame} from "../HelperComponents/Frame";
 
 export const DrivingForm = (props) => {
     const [instructorList, setInstructorList] = useState([])
@@ -76,8 +77,9 @@ export const DrivingForm = (props) => {
         }).then(() => props.close())
     }
     return (
-        <div>
-            <Form onSubmit={sendNewDriving}>
+        <Frame>
+            <h3 style={{textAlign: "center"}}>Utwórz jazdy</h3>
+            <Form onSubmit={sendNewDriving} style={{maxWidth: "90%", marginLeft: "auto", marginRight: "auto"}}>
                 <Form.Group>
                     <Form.Label>Wybierz date</Form.Label>
                     <Form.Control name="day" type="date" onChange={handleChange}
@@ -131,7 +133,7 @@ export const DrivingForm = (props) => {
                 </div>
 
             </Form>
-        </div>
+        </Frame>
 
     )
 }

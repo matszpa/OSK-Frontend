@@ -148,11 +148,10 @@ export const AddQuestion = (props) => {
                         {categories.map((c) => (
                             <Col sm={4} lg={1} key={c.id}>
                                 <Form.Check type="checkbox"
-                                            checked={formData.cattegory_question.some((item) => item === c.id)}
+                                            checked={formData.cattegory_question.some((item) => item.licenceCategoryId === c.id)}
                                             nome="cattegory_question"
                                             label={c.name}
                                             id={c.id}
-
                                             onChange={checkbox}/>
                             </Col>))}
                     </Row>

@@ -25,19 +25,6 @@ const NavigationBar = () => {
                               alt="logo"
                               src={logoBorder}/></Link>
             <ul className={styles.nav_link}>
-                {/*{user.role === 'STUDENT' && <>*/}
-                {/*    /!*<LiLink link="/singleQuestion" text="Jedno pytanie"/>*!/*/}
-                {/*    /!*<LiLink link="/exam" text="Test próbny"/>*!/*/}
-                {/*    <li className={styles.dropdownActivate}>*/}
-                {/*        Teoria*/}
-                {/*        <div className={styles.dropdown}>*/}
-                {/*            <div><Link to="/exam">Próbny egzamin</Link></div>*/}
-                {/*            <div><Link to="/singleQuestion">Losowe pytanie</Link></div>*/}
-                {/*        </div>*/}
-                {/*    </li>*/}
-                {/*    <LiLink link="/training" text={"Szkolenia"}/>*/}
-                {/*</>}*/}
-
                 <ProtectedLink role={["STUDENT"]} link="/exam" text={"Próbny egzamin"}/>
                 <ProtectedLink role={["ADMIN"]} link="/qustions" text={"Pytania"}/>
                 <ProtectedLink role={["ADMIN", "INSTRUCTOR", "STUDENT"]} link="/lecture" text={"Wykłady"}/>
@@ -78,4 +65,3 @@ const ProtectedLink = (props) => {
         </>
     )
 }
-// className={({isActive}) => isActive ? styles.active : ""}

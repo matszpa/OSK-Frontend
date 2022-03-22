@@ -93,7 +93,7 @@ export const DrivingPage = () => {
                 </>
             }
             <Modal show={selectedDriving}>
-                <Modal.Header>Zmień status</Modal.Header>
+                <Modal.Header><h4>Zmień status</h4></Modal.Header>
                 <Modal.Body>
                     <Form>
                         <Form.Label>Status jazd</Form.Label>

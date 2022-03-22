@@ -119,10 +119,18 @@ export const TrainingPage = () => {
     }
     return (
         <div>
-            {(!isFormOpen && user.role === "ADMIN") &&
-                <Button onClick={openModal} className={"mb-4"}>Utwórz szkolenie</Button>}
+            {(!isFormOpen && user.role === "ADMIN") && <div style={{display: "flex"}}>
+                <Form style={{'width': '200px'}}>
+                    <Form.Control as="select" name="category" onChange={change}>
+                        <option disabled selected>Wszystkie kategorie</option>
+                        {categories.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
+                    </Form.Control>
+                </Form>
+                <Button onClick={openModal} className={"mb-4 ms-4"}>Utwórz szkolenie</Button>
+
+            </div>}
             <Modal show={isFormOpen}>
-                <Modal.Header>Utwórz szkolenie</Modal.Header>
+                <Modal.Header><h4>Utwórz szkolenie</h4></Modal.Header>
                 <Modal.Body>
                     <Form style={{marginBottom: '2rem'}}>
                         <Form.Group>
@@ -163,18 +171,10 @@ export const TrainingPage = () => {
                 <Modal.Footer><Button onClick={addTraining}>Dodaj</Button><Button
                     onClick={() => setIsFormOpen(!isFormOpen)}>Anuluj</Button></Modal.Footer>
             </Modal>
-            {user.role === "ADMIN" &&
-                <Form style={{'width': '200px'}}>
-                    <Form.Label>Wybierz kategorie</Form.Label>
-                    <Form.Control as="select" name="category" onChange={change}>
-                        <option disabled selected>Wszystkie kategorie</option>
-                        {categories.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
-                    </Form.Control>
-                </Form>
-            }
+
             <h3 className={"mt-3"}> Aktualne szkolenia:</h3>
             <Frame>
-                <Table>
+                <Table style={{whiteSpace: "nowrap"}}>
                     <thead>
                     <tr>
                         <th>Kursant</th>

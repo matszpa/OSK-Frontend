@@ -3,7 +3,7 @@ import styles from './QuestionList.module.scss'
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import {Question} from "../Question/Question";
 import {Link, useNavigate} from "react-router-dom";
-import {Button, Modal} from "react-bootstrap";
+import {Button, Modal, Form} from "react-bootstrap";
 
 export const QuestionList = () => {
     const [questionArray, setQuestionArray] = useState([]);
@@ -11,13 +11,11 @@ export const QuestionList = () => {
     const [showDelete, setShowDelete] = useState(false);
     const [questionId, setQuestionId] = useState(null);
     const [offset, setOffset] = useState(0);
+    const [like, setLike] = useState("");
     useEffect(() => {
         fetch(`http://localhost:8000/questionList?limit=10&offset=${offset}`)
             .then((res) => res.json())
-            .then((res) => {
-                console.log(res)
-                setQuestionArray(res)
-            })
+            .then((res) => setQuestionArray(res))
     }, [])
     const deleteQuestion = (id) => {
         setShowDelete(true)
@@ -43,6 +41,13 @@ export const QuestionList = () => {
                 setQuestionArray(res)
             })
     }
+    const handleLikeChange = (e) => {
+        fetch(`http://localhost:8000/questionList?limit=10&offset=${offset}&like=${e.target.value}`)
+            .then((res) => res.json())
+            .then((res) => {
+                setQuestionArray(res)
+            })
+    }
     return (
         <div className={styles.container}>
             <Modal show={showDelete}>
@@ -50,21 +55,28 @@ export const QuestionList = () => {
                 <Modal.Footer><Button onClick={deleteConfirm}>Tak</Button><Button
                     onClick={() => setShowDelete(false)}>Nie</Button></Modal.Footer>
             </Modal>
-            <Link to="/addQuestion">Dodaj pytanie</Link>
+            <div style={{display: "flex"}}>
+                <Link to="/addQuestion"><Button>Dodaj pytanie</Button></Link>
+                <Form.Control placeholder="Wyszukaj pytanie" name="like" onChange={handleLikeChange}
+                              style={{width: "50%", marginLeft: "60px"}}/>
+            </div>
+
             {questionArray.map((q) => (
-                <div key={q.id}>
+                <div key={q.id} style={{marginBottom: "-20px"}}>
                     <hr/>
                     <p className={styles.questionContent}>Identyfikator pytania: {q.id}<span>
                         <DeleteForeverIcon
                             onClick={() => deleteQuestion(q.id)}/>
                     </span>
                     </p>
-                    <Question key={q.id} question={q}/>
+                    <div style={{maxWidth: "70%", marginLeft: "auto", marginRight: "auto"}}>
+                        <Question key={q.id} question={q}/>
+                    </div>
                 </div>
 
             ))
             }
-            <div style={{display: "flex", justifyContent: "space-between"}}>
+            <div style={{display: "flex", justifyContent: "space-between", marginBottom: "2rem"}}>
                 <Button onClick={() => changePage(-10)}>Poprzednia strona</Button>
                 <Button onClick={() => changePage(10)}>Następna strona</Button>
             </div>
