@@ -19,9 +19,6 @@ export const ExamPage = () => {
         setEndExamQuestions(array);
     }
     const checkAnswers = (array, questionArray) => {
-        //dodac correct=true dla konkretnego selected true
-        //seleted true i id correct=false
-        console.log("ILOSC PYTANI W EXAMPAGE", questionArray.length, questionArray)
         fetch("http://localhost:8000/checkExam", {
             method: "POST",
             body: JSON.stringify(array),
@@ -35,7 +32,6 @@ export const ExamPage = () => {
                 var examPoints = 0;
                 table.forEach((item) => {
                     var question = questionArray.find((q) => q.question.id === item.question_id);
-                    console.log(question);
                     var questionPoints = question.question.points;
                     if (item.answer === true) {
                         examPoints += questionPoints;

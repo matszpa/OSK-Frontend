@@ -76,7 +76,6 @@ export const ProfilePage = () => {
 
     }
     const changeEmail = (e) => {
-        console.log(e)
         fetch("http://localhost:8000/changeEmail", {
             method: "PUT",
             body: JSON.stringify({
@@ -108,7 +107,6 @@ export const ProfilePage = () => {
             },
         }).then((res) => res.json())
             .then((res) => {
-                console.log(res)
                 setUserData(res);
                 setShowEdit(false)
             })

@@ -61,7 +61,8 @@ export const LecturePage = () => {
     }
     return (
         <div>
-            {user.role === "ADMIN" && <Button onClick={() => setShowAddNew(!showAddNew)}>Dodaj wykład</Button>}
+            {user.role === "ADMIN" &&
+                <Button onClick={() => setShowAddNew(!showAddNew)}>Dodaj wykład</Button>}
 
             <NewLectureModal show={showAddNew} cancel={() => setShowAddNew(!showAddNew)}/>
             <CancelLectureModal show={cancelLecture !== null} cancel={() => setCancelLecture(null)}

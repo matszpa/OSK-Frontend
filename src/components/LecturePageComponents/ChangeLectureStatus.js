@@ -52,7 +52,6 @@ export const ChangeLectureStatus = (props) => {
     const presentCheckboxChange = (e) => {
         let trainingId = parseInt(e.target.id);
         let newArray = presentList
-        console.log(newArray)
         if (newArray.includes(trainingId)) {
             newArray = newArray.filter(e => e !== trainingId);
         } else {

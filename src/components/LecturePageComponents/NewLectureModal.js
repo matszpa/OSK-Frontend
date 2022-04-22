@@ -16,7 +16,6 @@ export const NewLectureModal = (props) => {
             .then((res) => res.json())
             .then((res) => setCategories(res));
 
-        console.log(moment().format("YYYY-MM-DD HH:mm:ss"))
     }, [])
     const getInstructors = (e) => {
         setNewLectureData({...newLectureData, [e.target.name]: parseInt(e.target.value)})
@@ -30,12 +29,6 @@ export const NewLectureModal = (props) => {
 
     const formOnChange = (e) => {
         setNewLectureData({...newLectureData, [e.target.name]: e.target.value})
-        console.log(newLectureData)
-    }
-    const dateOnChange = (e) => {
-
-        let date = new Date(e.target.value)
-        console.log(date)
     }
     const formSubmit = (e) => {
         fetch("http://localhost:8000/addNewLecture", {
@@ -44,11 +37,8 @@ export const NewLectureModal = (props) => {
             headers: {
                 "Content-Type": "application/json",
             },
-
         }).then(() => {
             window.location.reload(false)
-
-
         })
 
     }

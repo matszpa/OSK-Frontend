@@ -20,6 +20,7 @@ export const AddNewUser = () => {
     const {register, handleSubmit, formState: {errors}} = useForm({
         resolver: yupResolver(schema),
     });
+    const [message, setMessage] = useState("");
     const [user, setUser] = useState({
         firstName: "",
         lastName: "",
@@ -57,10 +58,17 @@ export const AddNewUser = () => {
             body: JSON.stringify(user),
             headers: {
                 "Content-Type": "application/json",
+                token: localStorage.getItem("token"),
             },
         })
             .then((res) => res.json())
-            .then((res) => navigate("/users"))
+            .then((res) => {
+                if (res.message) {
+                    setMessage(res.message)
+                } else {
+                    navigate("/users")
+                }
+            })
     }
     return (
         <div style={{width: "70%", margin: "auto"}}>
@@ -75,7 +83,6 @@ export const AddNewUser = () => {
 
                         <p className={"text-danger"}>{errors.firstName?.message}</p>
                     </Form.Group>
-
                     <Form.Group>
                         <Form.Label>Nazwisko</Form.Label>
                         <Form.Control name="lastName" type="input"
@@ -125,6 +132,7 @@ export const AddNewUser = () => {
                             </Row>
                         </Form.Group>
                     }
+                    {message !== "" && <p className="alert-danger">{message}</p>}
                     <div className={"mt-4"} style={{"display": "flex", justifyContent: "space-between"}}>
                         <Button type="submit">Dodaj</Button>
                         <Button onClick={() => navigate("/users")}>Anuluj</Button>

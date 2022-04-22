@@ -15,6 +15,7 @@ export const ExamHistoryTable = (props) => {
         }).then((res) => res.json())
             .then((res) => {
                 setData(res)
+                console.log(res)
             })
     }, [])
     return (
@@ -29,7 +30,7 @@ export const ExamHistoryTable = (props) => {
                 </thead>
                 <tbody>
                 {data.map(single => <tr key={single.id}>
-                    <td>{moment(single.date).format("DD-MM-YYYY HH:MM")}</td>
+                    <td>{moment(single.date).format("YYYY-MM-DD HH:mm")}</td>
                     <td>{single.licenceCategory.name}</td>
                     <td>{single.scoredPoints}</td>
                 </tr>)}

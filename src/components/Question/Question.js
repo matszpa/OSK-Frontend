@@ -18,14 +18,19 @@ export const Question = (props) => {
             <h5>{props.question.question}</h5>
             <div className={styles.media}>
                 {(props.question.image && props.question.image.indexOf(".mp4") > -1) ?
-                    (<ReactPlayer
+                    (<><ReactPlayer
                         className={styles.video}
                         controls
-                        onStart={() => console.log('onStart')}
-                        url={props.question.image}/>) : ""
+                        url={props.question.image}/>
+                        <a style={{color: "white"}}>Źródło: https://www.gov.pl/web/infrastruktura/prawo-jazdy</a>
+                    </>) : ""
                 }
                 {(props.question.image && props.question.image.indexOf(".mp4") === -1) && (
-                    <img src={props.question.image} alt="Brak zdjecia"/>)}
+                    <>
+                        <img src={props.question.image} alt="Brak zdjecia"/>
+                        <a style={{color: "white", display: "block"}}>Źródło:
+                            https://www.gov.pl/web/infrastruktura/prawo-jazdy</a>
+                    </>)}
             </div>
 
             {props.question.answers.map((a) => (

@@ -30,7 +30,7 @@ const TableBody = (props) => {
     const rows = props.data.map((item, index) =>
         <View style={styles.row} key={item.id}>
             <Text style={styles.tdIndex}>{index + 1}</Text>
-            <Text style={styles.tdStyles}>{moment(item.lecture.date).format('MM/DD/YYYY HH:MM')}</Text>
+            <Text style={styles.tdStyles}>{moment(item.lecture.date).format('MM/DD/YYYY HH:mm')}</Text>
             <Text style={styles.tdTopic}>{item.lecture.topic}</Text>
             <Text style={styles.tdStyles}>{item.lecture.duration} h</Text>
             <Text style={styles.tdStyles}>{item.isPresent ? "Tak" : "Nie"}</Text>

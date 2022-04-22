@@ -5,14 +5,19 @@ import {useNavigate} from "react-router-dom";
 import {Frame} from "../components/HelperComponents/Frame";
 
 export const UserListPage = () => {
-    const [users, setUsers] = useState([])
     const navigate = useNavigate();
+
+    const [users, setUsers] = useState([])
     useEffect(() => {
-        fetch("http://localhost:8000/allUsers")
+        fetch("http://localhost:8000/allUsers", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                token: localStorage.getItem("token"),
+            },
+        })
             .then((res) => res.json())
-            .then((res) => {
-                setUsers(res)
-            })
+            .then((res) => setUsers(res))
     }, [])
     const addnew = () => {
         navigate("addNewUser")

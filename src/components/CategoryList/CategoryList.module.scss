@@ -15,14 +15,15 @@
       font-weight: 400;
       letter-spacing: 2px;
       margin-bottom: 1rem;
-      border: #3a3a3a 1px solid;
+      border: #0d72b9 1px solid;
       border-radius: 20px;
-      background-color: #c9c9c9;
-      transition: all .2s ease-in;
+      background-color: #c5e6ff;
+      transition: all .1s ease-in;
     }
 
     li:hover {
-      letter-spacing: 4px;
+      letter-spacing: 3px;
+      color: black;
     }
   }
 

@@ -35,7 +35,6 @@ export const DrivingForm = (props) => {
         fetch(`http://localhost:8000/getAvalibleStudents/${newDriving.categoryId}?hour=${hour}&day=${newDriving.day}`)
             .then((res) => res.json())
             .then((res) => {
-                console.log(res)
                 setStudentList(res)
             });
     }
@@ -43,7 +42,6 @@ export const DrivingForm = (props) => {
         fetch(`http://localhost:8000/getAvalibleHoursForInstructor/${e.target.value}?day=${newDriving.day}`)
             .then((res) => res.json())
             .then((res) => {
-                console.log(res)
                 setHours(res)
             });
         setNewDriving({...newDriving, [e.target.name]: e.target.value})

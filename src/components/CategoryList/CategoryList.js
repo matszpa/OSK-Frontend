@@ -1,10 +1,8 @@
 import {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
-import {Category} from "./Category";
 import styles from './CategoryList.module.scss'
 import {useNavigate} from "react-router-dom";
 import {ExamHistoryTable} from "../ExamComponents/ExamHistoryTable";
-import {Frame} from "../HelperComponents/Frame";
 
 export const CategoryList = () => {
     const navigate = useNavigate();
@@ -34,18 +32,10 @@ export const CategoryList = () => {
                         </Link>)
                     }
                 </ul>
-
-
-                {/*{categories.map((c) =>*/}
-                {/*    <Link key={c.id} to={c.name}>*/}
-                {/*        <Category key={c.id} name={c.name}/>*/}
-                {/*    </Link>*/}
-                {/*)}*/}
-
             </div>
 
             <div className={"mt-2 mb-2"}>
-                <h2>Historia wykonanych egzaminów</h2>
+                <h2>Historia rozwiązanych egzaminów</h2>
                 <ExamHistoryTable/>
             </div>
         </div>

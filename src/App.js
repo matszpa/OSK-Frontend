@@ -31,12 +31,16 @@ function App() {
                     <Route path="/login" element={<LoginPage/>}/>
                     {user.role !== "" && (
                         <>
-                            <Route path="/singleQuestion" element={<CategoryList/>}/>
-                            <Route path="/singleQuestion/:Category" element={<SingleQuestionPage/>}/>
                             <Route path="/exam/" element={<CategoryList/>}/>
                             <Route path="/exam/:Category" element={<ExamPage/>}/>
-                            <Route path="/qustions" element={<QuestionList/>}/>
-                            <Route path="/addQuestion" element={<AddQuestion/>}/>
+                            <Route path="/qustions" element={
+                                <ProtectedRoute authorizedUser="ADMIN">
+                                    <QuestionList/>
+                                </ProtectedRoute>}/>
+                            <Route path="/addQuestion" element={
+                                <ProtectedRoute authorizedUser="ADMIN">
+                                    <AddQuestion/>
+                                </ProtectedRoute>}/>
                             <Route path="/users" element={
                                 <ProtectedRoute authorizedUser="ADMIN">
                                     <UserListPage/>
@@ -51,7 +55,6 @@ function App() {
                             <Route path="/lecture" element={<LecturePage/>}/>
                         </>
                     )}
-
                 </Routes>
             </Container>
 

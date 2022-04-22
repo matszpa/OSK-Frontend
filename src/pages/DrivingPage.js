@@ -9,10 +9,11 @@ import {Frame} from "../components/HelperComponents/Frame";
 export const DrivingPage = () => {
     const [isFormOpen, setIsFormOpen] = useState(false)
     const {user} = useContext(AuthContext);
-    const [upcoingDriving, setUpcomingDriving] = useState([]);
-    const [pastDriving, setPastDriving] = useState([]);
     const [selectedDriving, setSelectedDriving] = useState(null)
     const [cancelDriving, setCancelDriving] = useState(null)
+    const [upcomingDriving, setUpcomingDriving] = useState([]);
+    const [pastDriving, setPastDriving] = useState([]);
+
     useEffect(() => {
             fetch("http://localhost:8000/drivingList", {
                 method: "GET",
@@ -68,7 +69,7 @@ export const DrivingPage = () => {
             method: "DELETE",
         }).then((res) => res.json())
             .then(res => {
-                var tmp = upcoingDriving.filter((d) => d.id !== res ? d : "");
+                var tmp = upcomingDriving.filter((d) => d.id !== res ? d : "");
                 setUpcomingDriving(tmp);
                 setCancelDriving(null)
             })
@@ -82,7 +83,7 @@ export const DrivingPage = () => {
                 <DrivingForm close={() => window.location.reload(false)} cancel={() => setIsFormOpen(false)}/> : <>
                     <h2>Nadchodzące jazdy</h2>
                     <Frame>
-                        <DrivingTable list={upcoingDriving} text="Anuluj" buttonClick={handleCancelDriving}/>
+                        <DrivingTable list={upcomingDriving} text="Anuluj" buttonClick={handleCancelDriving}/>
                     </Frame>
 
                     <hr style={{marginTop: "40px"}}/>

@@ -8,20 +8,16 @@ import {Frame} from "../components/HelperComponents/Frame";
 
 export const TrainingPage = () => {
     const {user} = useContext(AuthContext)
-    const [trainingList, setTrainingList] = useState([]);
+    // const [trainingList, setTrainingList] = useState([]);
     const [categories, setCategories] = useState([]);
     const [userList, setUserList] = useState([])
     const [isFormOpen, setIsFormOpen] = useState(false);
-    const [newTraining, setNewTraining] = useState({
-        studentId: 2,
-        categoryId: 2,
-        paid: 0,
-        startDate: null,
-        totalCost: 3000
-    })
+    const [newTraining, setNewTraining] = useState({})
     const [newPay, setNewPay] = useState({show: false, id: null, value: 0});
     const [endTrainingObject, setEndTrainingObject] = useState(null)
     const [reportData, setReportData] = useState(null)
+
+    const [trainingList, setTrainingList] = useState([]);
     useEffect(() => {
         fetch("http://localhost:8000/categories")
             .then(res => res.json())
@@ -58,7 +54,6 @@ export const TrainingPage = () => {
     }
     const handleModalChange = (e) => {
         setNewTraining({...newTraining, [e.target.name]: +e.target.value});
-        console.log(e.target.value)
     }
     const addTraining = () => {
         setIsFormOpen(false)
@@ -78,7 +73,6 @@ export const TrainingPage = () => {
         setNewPay({...newPay, value: e.target.value})
     }
     const changePayAmount = () => {
-        console.log(newPay)
         fetch(`http://localhost:8000/addPay/${newPay.id}`, {
             method: "POST",
             body: JSON.stringify({pay: parseInt(newPay.value)}),
@@ -98,7 +92,6 @@ export const TrainingPage = () => {
             })
     }
     const endTraining = () => {
-        console.log(endTrainingObject.id)
         fetch(`http://localhost:8000/endTraining/${endTrainingObject.id}`)
             .then((res) => res.json())
             .then(res => {
