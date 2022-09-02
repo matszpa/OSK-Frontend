@@ -15,16 +15,10 @@ export const ExamPage = () => {
     const changeTab = (tab) => {
         setCurrentTab(tab);
     }
-    const changePoints = (pointsToAdd) => {
-        setPoints(points + pointsToAdd);
-    }
     const setQuestions = (array) => {
         setEndExamQuestions(array);
     }
     const checkAnswers = (array, questionArray) => {
-        //dodac correct=true dla konkretnego selected true
-        //seleted true i id correct=false
-        console.log("ILOSC PYTANI W EXAMPAGE", questionArray.length, questionArray)
         fetch("http://localhost:8000/checkExam", {
             method: "POST",
             body: JSON.stringify(array),
@@ -35,14 +29,18 @@ export const ExamPage = () => {
             .then((res) => res.json())
             .then((table) => {
                 var newArray = [];
+                var examPoints = 0;
                 table.forEach((item) => {
-                    var question = questionArray.find((q) => q.question.id == item.question_id);
-                    if (item.answer === true)
+                    var question = questionArray.find((q) => q.question.id === item.question_id);
+                    var questionPoints = question.question.points;
+                    if (item.answer === true) {
+                        examPoints += questionPoints;
                         question.question.answers.map((a) => a.selected ? a.correct = true : a.correct = false)
-                    else
+                    } else
                         question.question.answers.map((a) => a.id === item.answer ? a.correct = true : a.correct = false)
                     newArray.push(question);
                 })
+                setPoints(examPoints)
                 setEndExamQuestions(newArray)
             }).then(() => {
             changeTab("End")
@@ -57,7 +55,7 @@ export const ExamPage = () => {
         }}>
             {currentTab === "Start" && <StartExam changeTab={changeTab}/>}
             {currentTab === "StartExam" &&
-                <Exam changePoints={changePoints} changeTab={changeTab} setQuestions={setQuestions}
+                <Exam changeTab={changeTab} setQuestions={setQuestions}
                       checkAnswers={checkAnswers}/>}
             {currentTab === "End" &&
                 <EndScreen points={points} changeTab={changeTab} questionArray={endExamQuestions}/>}

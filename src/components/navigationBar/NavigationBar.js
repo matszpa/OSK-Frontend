@@ -4,6 +4,8 @@ import {useEffect, useContext} from "react";
 import {Link, NavLink} from "react-router-dom";
 import AuthContext from "../../Context/AuthProvider";
 import {useNavigate} from "react-router-dom";
+import {LecturePage} from "../../pages/LecturePage";
+import logoBorder from './logoBorder.png'
 
 const NavigationBar = () => {
     const navigate = useNavigate();
@@ -20,28 +22,16 @@ const NavigationBar = () => {
     return (
         <nav className={styles.navHeader}>
             <Link to="/"><img className={styles.logo}
-                              src="https://cdn3.iconfinder.com/data/icons/font-awesome-solid/512/car-512.png"/></Link>
+                              alt="logo"
+                              src={logoBorder}/></Link>
             <ul className={styles.nav_link}>
-                {user.role === 'STUDENT' && <>
-                    <LiLink link="/singleQuestion" text="Jedno pytanie"/>
-                    <LiLink link="/exam" text="Test próbny"/>
-                    <LiLink link="/training" text={"Szkolenia"}/>
-                </>}
-                {user.role === 'ADMIN' &&
-                    <>
-                        {/*<LiLink link="/admin" text="Admin"/>*/}
-                        <LiLink link="/qustions" text={"Pytania"}/>
-                        <LiLink link="/users" text={"Użytkownicy"}/>
-                        <LiLink link="/training" text={"Szkolenia"}/>
-
-                    </>
-                }
-                {user.role !== "" && <>
-                    <LiLink link="/driving" text={"Jazdy"}/>
-                    <LiLink link="/profile" text={"Profil"}/>
-                </>
-                }
-
+                <ProtectedLink role={["STUDENT"]} link="/exam" text={"Próbny egzamin"}/>
+                <ProtectedLink role={["ADMIN"]} link="/qustions" text={"Pytania"}/>
+                <ProtectedLink role={["ADMIN", "INSTRUCTOR", "STUDENT"]} link="/lecture" text={"Wykłady"}/>
+                <ProtectedLink role={["ADMIN"]} link="/users" text={"Użytkownicy"}/>
+                <ProtectedLink role={["ADMIN", "STUDENT"]} link="/training" text={"Szkolenia"}/>
+                <ProtectedLink role={["ADMIN", "INSTRUCTOR", "STUDENT"]} link="/driving" text={"Jazdy"}/>
+                <ProtectedLink role={["ADMIN", "INSTRUCTOR", "STUDENT"]} link="/profile" text={"Profil"}/>
                 {user.role === '' ?
                     <li>
                         <NavLink to="/login"
@@ -64,4 +54,14 @@ const LiLink = (props) => {
         </li>
     )
 }
-// className={({isActive}) => isActive ? styles.active : ""}
+
+const ProtectedLink = (props) => {
+    const {user} = useContext(AuthContext);
+    return (
+        <>
+            {props?.role.includes(user.role) ?
+                <LiLink link={props.link} text={props.text}/>
+                : <></>}
+        </>
+    )
+}

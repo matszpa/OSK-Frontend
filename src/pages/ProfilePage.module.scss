@@ -6,8 +6,11 @@
     display: flex;
     justify-content: space-between;
 
+    .profileFrame {
+      width: 48%;
+    }
+
     div {
-      width: 45%;
 
       form > * {
         margin-top: .8rem;

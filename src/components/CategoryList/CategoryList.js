@@ -1,26 +1,44 @@
 import {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
-import {Category} from "./Category";
-import {Col} from "react-bootstrap";
 import styles from './CategoryList.module.scss'
-export const CategoryList =()=>{
+import {useNavigate} from "react-router-dom";
+import {ExamHistoryTable} from "../ExamComponents/ExamHistoryTable";
+
+export const CategoryList = () => {
+    const navigate = useNavigate();
     const [categories, setCategories] = useState([]);
-    useEffect(()=>{
-        fetch("http://localhost:8000/categories")
-            .then(res=>res.json())
-            .then(data=> {
+    useEffect(() => {
+        fetch("http://localhost:8000/categoryListForStudent", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+                token: localStorage.getItem("token"),
+            },
+        })
+            .then(res => res.json())
+            .then(data => {
                 setCategories(data)
             });
-    },[])
+    }, [])
     return (
-        <div className={styles.wrapper}>
-{/*            {categories.map((c)=><li key={c.id}>{c.name}</li>)}*/}
-            {categories.map((c)=>
-                    <Link key={c.id} to={c.name} >
-                <Category key={c.id} name={c.name}/>
-            </Link>
+        <div>
+            <div className={styles.wrapper}>
+                <h2>Dostępne kategorie</h2>
 
-            )}
+                <ul>
+                    {categories.map((c) =>
+                        <Link key={c.id} to={c.name}>
+                            <li key={c.id}>Kategoria {c.name}</li>
+                        </Link>)
+                    }
+                </ul>
+            </div>
+
+            <div className={"mt-2 mb-2"}>
+                <h2>Historia rozwiązanych egzaminów</h2>
+                <ExamHistoryTable/>
+            </div>
         </div>
+
     )
 }

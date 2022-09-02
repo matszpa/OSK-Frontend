@@ -2,9 +2,9 @@ import {Button, Form, Table} from "react-bootstrap";
 import {useEffect, useState} from "react";
 import {format} from "date-fns";
 import moment from 'moment';
+import {Frame} from "../HelperComponents/Frame";
 
 export const DrivingForm = (props) => {
-    const [selectedInstructor, seSelectedInstructor] = useState(null)
     const [instructorList, setInstructorList] = useState([])
     const [categories, setCategories] = useState([])
     const [hours, setHours] = useState([]);
@@ -35,7 +35,6 @@ export const DrivingForm = (props) => {
         fetch(`http://localhost:8000/getAvalibleStudents/${newDriving.categoryId}?hour=${hour}&day=${newDriving.day}`)
             .then((res) => res.json())
             .then((res) => {
-                console.log(res)
                 setStudentList(res)
             });
     }
@@ -43,7 +42,6 @@ export const DrivingForm = (props) => {
         fetch(`http://localhost:8000/getAvalibleHoursForInstructor/${e.target.value}?day=${newDriving.day}`)
             .then((res) => res.json())
             .then((res) => {
-                console.log(res)
                 setHours(res)
             });
         setNewDriving({...newDriving, [e.target.name]: e.target.value})
@@ -77,8 +75,9 @@ export const DrivingForm = (props) => {
         }).then(() => props.close())
     }
     return (
-        <div>
-            <Form onSubmit={sendNewDriving}>
+        <Frame>
+            <h3 style={{textAlign: "center"}}>Utwórz jazdy</h3>
+            <Form onSubmit={sendNewDriving} style={{maxWidth: "90%", marginLeft: "auto", marginRight: "auto"}}>
                 <Form.Group>
                     <Form.Label>Wybierz date</Form.Label>
                     <Form.Control name="day" type="date" onChange={handleChange}
@@ -118,8 +117,8 @@ export const DrivingForm = (props) => {
                                         {studentList.length > 0 ? studentList.map((s) =>
                                             <option
                                                 key={s.id}
-                                                value={s.id}>{s.user.firstName} {s.user.lastName} Rozpoczął:{format(new Date(s.startDate), 'dd/MM/yyyy')} Wyjeżdżone
-                                                godziny:{s.drivingHours}</option>) : ""}
+                                                value={s.id}>{s.user.firstName} {s.user.lastName} Rozpoczął: {format(new Date(s.startDate), 'dd/MM/yyyy')} Wyjeżdżone
+                                                godziny: {s.drivingHours}</option>) : ""}
                                     </Form.Control>
                                 </td>
                             </tr> : "")
@@ -132,7 +131,7 @@ export const DrivingForm = (props) => {
                 </div>
 
             </Form>
-        </div>
+        </Frame>
 
     )
 }

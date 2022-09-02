@@ -1,37 +1,35 @@
-import {useState, useContext, createContext, useEffect} from "react";
-import {useNavigate} from "react-router-dom";
+import {useState, createContext, useEffect} from "react";
 
-const AuthContext = createContext({});
-export const AuthProvider = ({children}) => {
-    const [user, setUser] = useState({username: '', role: ''});
-    const navigate = useNavigate();
-    useEffect(() => {
-        if (localStorage.getItem("token")) {
-            fetch("http://localhost:8000/user", {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                    token: localStorage.getItem("token"),
-                },
-            })
-                .then((res) => res.json())
-                .then((data) => {
-                    let user = {
-                        username: data.username,
-                        role: data.role,
+    const AuthContext = createContext({});
+    export const AuthProvider = ({children}) => {
+        const [user, setUser] = useState({role: '', token:''});
+        useEffect(() => {
+            if (localStorage.getItem("token")) {
+                fetch("http://localhost:8000/user", {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json",
                         token: localStorage.getItem("token"),
-                    };
-                    setUser(user);
-                });
-        } else {
-            // navigate("/login");
-        }
-    }, []);
-    return (
-        <AuthContext.Provider value={{user, setUser}}>
-            {children}
-        </AuthContext.Provider>
-    )
-}
-
-export default AuthContext;
+                    },
+                })
+                    .then((res) => res.json())
+                    .then((data) => {
+                        if (!data.err) {
+                            let user = {
+                                role: data.role,
+                                token: localStorage.getItem("token"),
+                            };
+                            setUser(user);
+                        } else {
+                            localStorage.removeItem("token")
+                        }
+                    })
+            }
+        }, []);
+        return (
+            <AuthContext.Provider value={{user, setUser}}>
+                {children}
+            </AuthContext.Provider>
+        )
+    }
+    export default AuthContext;

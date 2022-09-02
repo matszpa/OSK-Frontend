@@ -1,10 +1,32 @@
 .wrapper {
-  width: 80%;
   margin: auto;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-gap: 40px;
-  grid-auto-rows: minmax(100px, auto);
+  display: block;
+
+  //grid-template-columns: repeat(3, 1fr);
+  //grid-template-columns:300px 300px;
+  //grid-gap: 40px;
+  //grid-auto-rows: minmax(100px, auto);
+  ul {
+    list-style: none;
+    padding: 0;
+
+    li {
+      padding: 1rem;
+      font-weight: 400;
+      letter-spacing: 2px;
+      margin-bottom: 1rem;
+      border: #0d72b9 1px solid;
+      border-radius: 20px;
+      background-color: #c5e6ff;
+      transition: all .1s ease-in;
+    }
+
+    li:hover {
+      letter-spacing: 3px;
+      color: black;
+    }
+  }
+
   @media only screen and (max-width: 900px) {
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 40px;

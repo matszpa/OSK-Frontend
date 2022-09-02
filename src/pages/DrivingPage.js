@@ -4,14 +4,16 @@ import {DrivingForm} from "../components/DrivingPageComponents/DrivingForm";
 import {DrivingTable} from "../components/DrivingPageComponents/DrivingTable";
 import AuthContext from "../Context/AuthProvider";
 import {format} from "date-fns";
+import {Frame} from "../components/HelperComponents/Frame";
 
 export const DrivingPage = () => {
     const [isFormOpen, setIsFormOpen] = useState(false)
     const {user} = useContext(AuthContext);
-    const [upcoingDriving, setUpcomingDriving] = useState([]);
-    const [pastDriving, setPastDriving] = useState([]);
     const [selectedDriving, setSelectedDriving] = useState(null)
     const [cancelDriving, setCancelDriving] = useState(null)
+    const [upcomingDriving, setUpcomingDriving] = useState([]);
+    const [pastDriving, setPastDriving] = useState([]);
+
     useEffect(() => {
             fetch("http://localhost:8000/drivingList", {
                 method: "GET",
@@ -40,7 +42,6 @@ export const DrivingPage = () => {
         setSelectedDriving({...selectedDriving, [e.target.name]: e.target.value})
     }
     const confirmStatusChange = () => {
-        var tmp = selectedDriving;
         fetch(`http://localhost:8000/changeStatus/${selectedDriving.id}`, {
             method: "PUT",
             body: JSON.stringify(selectedDriving),
@@ -68,7 +69,7 @@ export const DrivingPage = () => {
             method: "DELETE",
         }).then((res) => res.json())
             .then(res => {
-                var tmp = upcoingDriving.filter((d) => d.id !== res ? d : "");
+                var tmp = upcomingDriving.filter((d) => d.id !== res ? d : "");
                 setUpcomingDriving(tmp);
                 setCancelDriving(null)
             })
@@ -81,14 +82,19 @@ export const DrivingPage = () => {
             {isFormOpen ?
                 <DrivingForm close={() => window.location.reload(false)} cancel={() => setIsFormOpen(false)}/> : <>
                     <h2>Nadchodzące jazdy</h2>
-                    <DrivingTable list={upcoingDriving} text="Anuluj" buttonClick={handleCancelDriving}/>
-                    <hr/>
-                    <h2>Odbyte jazdy</h2>
-                    <DrivingTable list={pastDriving} text="Zmień status" buttonClick={editDriving}/>
+                    <Frame>
+                        <DrivingTable list={upcomingDriving} text="Anuluj" buttonClick={handleCancelDriving}/>
+                    </Frame>
+
+                    <hr style={{marginTop: "40px"}}/>
+                    <h2>Zrealizowane jazdy</h2>
+                    <Frame>
+                        <DrivingTable list={pastDriving} text="Zmień status" buttonClick={editDriving}/>
+                    </Frame>
                 </>
             }
             <Modal show={selectedDriving}>
-                <Modal.Header>Zmień status</Modal.Header>
+                <Modal.Header><h4>Zmień status</h4></Modal.Header>
                 <Modal.Body>
                     <Form>
                         <Form.Label>Status jazd</Form.Label>
@@ -96,7 +102,7 @@ export const DrivingPage = () => {
                                       name="status"
                                       onChange={onchangeStatus}>
                             <option value="Nowa">Nowa</option>
-                            <option value="Odbyta">Odbyta</option>
+                            <option value="Zrealizowana">Zrealizowana</option>
                             <option value="Anulowana">Anulowana</option>
                         </Form.Control>
                         <Form.Label>Komentarz</Form.Label>
